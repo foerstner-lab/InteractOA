@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>InteractOA - Start</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript" src="app.js"></script>
+</head>
+<header>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">InteractOA</a>
+            </div>
+        </div>
+    </nav>
+</header>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="jumbotron">
+                    <h3>Welcome to InteractOA!</h3>
+                    <br/>
+                    <p>
+                        InteractOA is visualization tool for biological regulatory networks in prokaryotic organisms based on Open Access (OA) database "Wikidata"
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-10">
+                <div class="panel panel-default">
+                    <div class="card bg-dark text-white">Viewer</div>
+                    <div class="card-body">
+                        <form>
+                            <label for="organism">Select organism: </label>
+                            <select name="organism" id="organism" class="form-control">
+                                <option value="Q21102938">Escherichia coli str. K-12 substr. MG1655</option>
+                            </select>
+                            <br/>
+                            <label for="viewer_type">Select viewer type: </label>
+                            <select name="viewer_type" id="viewer_type" class="form-control">
+                                 <option value="Graph" selected>Graph</option>
+                                 <option value="Tree">Tree</option>
+                                 <option value="TreeMap">Tree Map</option>
+                                 <option value="Table">Tabular</option>
+                            </select>
+                            <br/>
+                            <div class="float-right">
+                                <button class="btn-lg" type="button" onclick="open_viewer(document.getElementById('organism').value, document.getElementById('viewer_type').value)">View</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+</body>
+<footer>
+    <div class="page-footer font-small blue pt-4 mt-4">
+        <center>All rights reserved</center>
+    </div>
+</footer>
+</html>
