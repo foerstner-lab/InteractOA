@@ -3,7 +3,7 @@ from wikidataintegrator.wdi_core import WDItemEngine
 import pandas as pd
 import HTML
 import urllib.parse
-
+import re
 
 def get_wd_label(QID):
     query_file = open('Label_Fetch_Query.rq', 'r')
@@ -64,12 +64,11 @@ def get_HTML_cited_QID(sRNA_QID_list, Organism_QID):
                                        '&quote=' + urllib.parse.quote_plus(result['quote']['value']) +
                                        '">Read the article</a>', result['quote']['value']])
     data_tbl = HTML.table(r_list, header_row=['#', 'sRNA', 'Type of Regulation', 'Target Gene', 'Article Link', 'Quote'])
-    final_html = "<div><h2>Referenced items: " + get_wd_label(Organism_QID) + "</h2></div>" + data_tbl
 
-    r_final_html = final_html.replace(
-        '<TABLE border="1" style="border: 1px solid #000000; border-collapse: collapse;" cellpadding="4">',
-        '<TABLE class="table table-striped table-sm table-bordered table-hover table-responsive-sm" style="font-family: Courier New; font-size: small;">')
-    return r_final_html
+    final_html = "<div><h2>Referenced items: " + get_wd_label(Organism_QID) + "</h2></div>" + re.sub('(?<=TABLE)(.*)(?=>)',
+           ' class="table table-striped table-sm table-bordered table-hover table-responsive-sm" style="font-family: Courier New; font-size: small;"',
+                                                                                                     data_tbl)
+    return final_html
 
 
 def run_script(organism_QID):
