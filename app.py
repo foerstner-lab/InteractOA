@@ -42,6 +42,7 @@ def get_sRNA__QID_list(QID):
 
 def get_HTML_cited_QID(sRNA_QID_list, Organism_QID):
     r_list = []
+    row_nums = 0
     REG_PROP_df = pd.read_csv('REGULATORY_PROPERTIES.CSV', sep=',', names=['PROPERTY', 'PROPERTY_LABEL'])
     query_file = open('QUERY.rq', 'r')
     query_template = query_file.read()
@@ -54,15 +55,21 @@ def get_HTML_cited_QID(sRNA_QID_list, Organism_QID):
             if len(results) != 0:
                 for result in results:
                     if 'PMCID' in result:
-                        r_list.append([get_wd_label(sRNA_QID),
+                        row_nums += 1
+                        r_list.append([row_nums,
+                                       get_wd_label(sRNA_QID),
                                        row['PROPERTY_LABEL'],
                                        result['geneLabel']['value'],
                                        '<a href="Article_Viewer.html?article_PMCID=' + result['PMCID']['value'] +
                                        '&quote=' + urllib.parse.quote_plus(result['quote']['value']) +
                                        '">Read the article</a>', result['quote']['value']])
-    data_tbl = HTML.table(r_list, header_row=['sRNA', 'Type of Regulation', 'Target Gene', 'Article Link', 'Quote'])
+    data_tbl = HTML.table(r_list, header_row=['#', 'sRNA', 'Type of Regulation', 'Target Gene', 'Article Link', 'Quote'])
     final_html = "<div><h2>Referenced items: " + get_wd_label(Organism_QID) + "</h2></div>" + data_tbl
-    return final_html
+
+    r_final_html = final_html.replace(
+        '<TABLE border="1" style="border: 1px solid #000000; border-collapse: collapse;" cellpadding="4">',
+        '<TABLE class="table table-striped table-sm table-bordered table-hover table-responsive-sm" style="font-family: Courier New; font-size: small;">')
+    return r_final_html
 
 
 def run_script(organism_QID):
@@ -92,5 +99,5 @@ def return_cited_table():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
 

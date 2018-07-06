@@ -1,6 +1,5 @@
 #defaultView:#view_type#
-SELECT DISTINCT ?rna ?rnaLabel ?target ?targetLabel ?rgb WHERE {
-      VALUES ?toggle { true false }
+SELECT DISTINCT ?item ?itemLabel ?rgb ?link WHERE {
       ?rna wdt:P703 wd:#QID#.
   {
       { ?rna wdt:P31 wd:Q11053. }
@@ -31,20 +30,21 @@ SELECT DISTINCT ?rna ?rnaLabel ?target ?targetLabel ?rgb WHERE {
       UNION
       { ?rna wdt:P279 wd:Q1012651. }
     }
-  OPTIONAL { ?rna wdt:P128 ?target. }
-  OPTIONAL { ?rna wdt:P3777 ?target. }
-  OPTIONAL { ?rna wdt:P3773 ?target. }
-  OPTIONAL { ?rna wdt:P3776 ?target. }
-  OPTIONAL { ?rna wdt:P3771 ?target. }
-  OPTIONAL { ?rna wdt:P3774 ?target. }
-  OPTIONAL { ?rna wdt:P3772 ?target. }
-  OPTIONAL { ?rna wdt:P3775 ?target. }
-  OPTIONAL { ?rna wdt:P3778 ?target. }
-  OPTIONAL { ?rna wdt:P3779 ?target. }
-  OPTIONAL { ?rna wdt:P3781 ?target. }
-  OPTIONAL { ?rna wdt:P3780 ?target. }
+  OPTIONAL { ?rna wdt:P128 ?targetgene. }
+  OPTIONAL { ?rna wdt:P3777 ?targetgene. }
+  OPTIONAL { ?rna wdt:P3773 ?targetgene. }
+  OPTIONAL { ?rna wdt:P3776 ?targetgene. }
+  OPTIONAL { ?rna wdt:P3771 ?targetgene. }
+  OPTIONAL { ?rna wdt:P3774 ?targetgene. }
+  OPTIONAL { ?rna wdt:P3772 ?targetgene. }
+  OPTIONAL { ?rna wdt:P3775 ?targetgene. }
+  OPTIONAL { ?rna wdt:P3778 ?targetgene. }
+  OPTIONAL { ?rna wdt:P3779 ?targetgene. }
+  OPTIONAL { ?rna wdt:P3781 ?targetgene. }
+  OPTIONAL { ?rna wdt:P3780 ?targetgene. }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-  BIND(IF(?toggle,?rna,?target) AS ?item).
-  BIND(IF(?toggle,?rnaLabel,?targetLabel) AS ?itemLabel).
-  BIND(IF(?toggle,"FFA500","7FFF00") AS ?rgb).
+  VALUES ?toggle { true false }
+  BIND(IF(?toggle,?targetgene,?rna) AS ?item).
+  BIND(IF(?toggle,"7FFF00","FFA500") AS ?rgb).
+  BIND(IF(?toggle,"",?targetgene) AS ?link).
   }

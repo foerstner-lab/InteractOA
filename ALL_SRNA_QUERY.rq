@@ -1,4 +1,4 @@
-SELECT DISTINCT ?rna ?rnaLabel ?target ?targetLabel WHERE {
+SELECT DISTINCT ?rna ?target WHERE {
       ?rna wdt:P703 wd:#QID#.
   {
       { ?rna wdt:P31 wd:Q11053. }
@@ -41,5 +41,4 @@ SELECT DISTINCT ?rna ?rnaLabel ?target ?targetLabel WHERE {
   OPTIONAL { ?rna wdt:P3779 ?target. }
   OPTIONAL { ?rna wdt:P3781 ?target. }
   OPTIONAL { ?rna wdt:P3780 ?target. }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
   }
