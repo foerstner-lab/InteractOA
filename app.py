@@ -4,6 +4,7 @@ import pandas as pd
 import HTML
 import urllib.parse
 import re
+from WDQueryGenerator import *
 
 def get_wd_label(QID):
     query_file = open('Label_Fetch_Query.rq', 'r')
@@ -24,7 +25,7 @@ def get_wd_label(QID):
 
 
 def get_sRNA__QID_list(QID):
-    query_file = open('ALL_SRNA_QUERY.rq', 'r')
+    query_file = open('ALL__INTERACTED_SRNA_QUERY.rq', 'r')
     query_template = query_file.read()
     QUERY = query_template
     QUERY = QUERY.replace("#QID#", QID)
@@ -62,12 +63,18 @@ def get_HTML_cited_QID(sRNA_QID_list, Organism_QID):
                                        result['geneLabel']['value'],
                                        '<a href="Article_Viewer.html?article_PMCID=' + result['PMCID']['value'] +
                                        '&quote=' + urllib.parse.quote_plus(result['quote']['value']) +
-                                       '">Read the article</a>', result['quote']['value']])
-    data_tbl = HTML.table(r_list, header_row=['#', 'sRNA', 'Type of Regulation', 'Target Gene', 'Article Link', 'Quote'])
+                                       '">Read article</a>',
+                                       result['quote']['value'],
+                                      '<div class="form-control"><a href="http://www.wikidata.org/entity/' + sRNA_QID +
+                                       '"><img src="/static/images/Interact_logo_Wikidata.png"' +
+                                       'style="max-height: 30px;" class="rounded"></a></div>'])
+    data_tbl = HTML.table(r_list, header_row=['#', 'sRNA', 'Type of Regulation', 'Target Gene', 'Article Link', 'Quote',
+                                              'Source'])
 
-    final_html = "<div><h2>Referenced items: " + get_wd_label(Organism_QID) + "</h2></div>" + re.sub('(?<=TABLE)(.*)(?=>)',
-           ' class="table table-striped table-sm table-bordered table-hover table-responsive-sm" style="font-family: Courier New; font-size: small;"',
-                                                                                                     data_tbl)
+    final_html = "<div><h2>Referenced items: " + get_wd_label(Organism_QID) + '</h2></div>' +\
+                 re.sub('(?<=TABLE)(.*)(?=>)', ' id="data_tbl" class="table table-striped table-sm table-bordered ' +
+                        'table-hover table-responsive-sm" style="font-family: Courier New; font-size: small;"',
+                        data_tbl)
     return final_html
 
 
@@ -97,6 +104,19 @@ def return_cited_table():
     return jsonify(results=run_script(organism_QID))
 
 
+@app.route('/generate_viewer_query')
+def return_viewer_query():
+    organism_qid = request.args.get('organism_qid', default=None, type=None)
+    view_type = request.args.get('view_type', default=None, type=None)
+    filters = request.args.get('filters', default=None, type=None)
+    shows = request.args.get('shows', default=None, type=None)
+    words = request.args.get('words', default=None, type=None)
+    is_interacted = request.args.get('is_interacted', default=None, type=None)
+    only_no_interacted = request.args.get('only_no_interacted', default=None, type=None)
+    return jsonify(results=WDQueryGenerator(organism_qid, view_type, filters, shows, words, is_interacted,
+                                            only_no_interacted).generate_query())
+
+
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
 

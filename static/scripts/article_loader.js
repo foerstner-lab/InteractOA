@@ -1,18 +1,22 @@
-function getQueryStringValue(key) {
-	var tmp = decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
-	return tmp = tmp.replace(new RegExp("\\+","g"),' ');
+function getQueryStringParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
-
 $(document).ready(function() {
-	var article_url = "https://europepmc.org/articles/PMC" + getQueryStringValue("article_PMCID");
+	var article_url = "https://europepmc.org/articles/PMC" + getQueryStringParameterByName("article_PMCID");
 	$.ajax({
 		url : article_url,
 		dataType : 'html',
 		success : function(response)
 		{
 			var content = jQuery(response).find('#article_body').html();
-			var search_phrase = getQueryStringValue("quote");
-			var link_to_source = "See the article in the main source: <a href=\"" + article_url + "\">Click here </a>";
+			var search_phrase = getQueryStringParameterByName("quote");
+			var link_to_source = "See the article in the main source: <a href=\"" + article_url + '\" target="_blank">Click here </a>';
 			var content_edited = content;
 			$('#link_to_source').html(link_to_source);
 			$('#content').html(content_edited);

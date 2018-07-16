@@ -1,46 +1,41 @@
-function getQueryStringValue (key)
+function generate_query()
 {
-    return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+	var organism_qid = "";
+	var viewer_type = "";
+	var words = "";
+	var RNA_types = "";
+	var show_types = "";
+	var optional_interact = "";
+	var only_no_interact = "";
+	$('#form input[type=checkbox]:checked, #form input[type=text], #form select').each(
+	    function(index){
+	        var input = $(this);
+	        if (input.attr('name') == 'organism'){organism_qid = input.val();}
+	        if (input.attr('name') == 'viewer_type'){viewer_type = input.val();}
+	        if (input.attr('name') == 'WORDS'){words = input.val();}
+	        if (input.attr('name') == 'RNA_TYPE'){RNA_types += input.val() + ',';}
+	        if (input.attr('name') == 'SHOW_TYPE'){show_types += input.val() + ',';}
+	        if (input.attr('name') == 'OPTIONAL_INTERACT'){optional_interact = input.val();}
+	        if (input.attr('name') == 'ONLY_NO_INTERACT'){only_no_interact = input.val();}
+	    })
+	RNA_types = RNA_types.slice(0, -1);
+	show_types = show_types.slice(0, -1);
+	var query = ""
+	$.getJSON('generate_viewer_query', {organism_qid : organism_qid, view_type : viewer_type, filters : RNA_types, shows : show_types, words : words, is_interacted : optional_interact, only_no_interacted : only_no_interact}, function(returned_query) {
+    	query = encodeURIComponent(returned_query.results);
+		$('#Visualizer').attr('style', "border: none; " + "width: " + $('#Vis_div').width() + "px; height: " + ($('#Vis_div').height() - 2) + "px;");
+    	$('#Visualizer').attr('src', "viewer.html?wd_query=" + encodeURIComponent(query) + "&organism=" + organism_qid + "&frame_height=" + $('#Vis_div').height() + "&frame_width=" + $('#Vis_div').width());
+	});
 };
-function readFile()
-{
-    var res = ""
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "QUERY_TEMPLATE.txt", false);
-    xhttp.onreadystatechange = function ()
-    {
-        if(xhttp.readyState === 4)
-        {
-            if(xhttp.status === 200 || xhttp.status == 0)
-            {
-                res = xhttp.responseText;
-            }
-        }
-    }
-    xhttp.send(null);
-    return res;
-};
-function loader()
-{
-	
-	var QID = getQueryStringValue("organism");
-	document.getElementById('cited_link').href = "Cited_records.html?organism=" + QID;
-    var query_template = "";
-    query_template = readFile();
-    var query = query_template.replace("#QID#", QID);
-    query = query.replace("#view_type#", getQueryStringValue("viewer_type"));
-    query = encodeURIComponent(query);
-    query = "https://query.wikidata.org/embed.html#" + query
-    var width = window.screen.availWidth - (window.screen.availWidth * 0.02);
-    var height = window.screen.availHeight - (window.screen.availHeight * 0.14);
-    document.getElementById('iframe_viewer').style = "width: " + width + "px; height: " + height + "px; border: none;";
-    document.getElementById('iframe_viewer').src = query;
-};
-function open_viewer(organism, view_type)
-{
-    //str = str.substring(0, str.length - 1);
-    var my_url = "viewer.html";
-    window.open(my_url + "?organism=" + organism + "&viewer_type=" + view_type, "_blank");
-};
-// Would write the value of the QueryString-variable called name to the console
-console.log(getQueryStringValue("name"));
+$(document).ready(function() {
+	$('#ONLY_NO_INTERACT').change(function(){
+	    if(this.checked){
+	        $( "#OPTIONAL_INTERACT").removeAttr("checked");
+	        $( "#OPTIONAL_INTERACT").prop("checked", false);
+			$( "#OPTIONAL_INTERACT").attr("disabled", true);
+	    }
+	    else{
+	    	$( "#OPTIONAL_INTERACT").removeAttr("disabled");
+	    }
+	});
+});

@@ -1,75 +1,353 @@
 <!DOCTYPE html>
+<!-- All images used in this website are sourced from an open source images website pixabay.com-->
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>InteractOA - Start</title>
-    <script src="{{url_for('.static', filename='scripts/jquery.min.js')}}"></script>
-    <link rel="stylesheet" href="{{url_for('.static', filename='css/bootstrap.min.css')}}">
-	<script src="{{url_for('.static', filename='scripts/bootstrap.bundle.min.js')}}"></script>
-    <script type="text/javascript" src="{{url_for('.static', filename='scripts/app.js')}}"></script>
-    <link rel="icon" type="image/png" href="{{url_for('.static', filename='images/favico.png')}}">
-</head>
-<header>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <div class="container-fluid">
-            <div class="navbar-header">
-            	<img src="{{url_for('.static', filename='images/logo.png')}}" style="height: 44px;"/>
-                <a class="navbar-brand" href="#">InteractOA</a>
-            </div>
-        </div>
-    </nav>
-</header>
-<body>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>InteractOA - Start</title>
+		<script src="{{url_for('.static', filename='scripts/jquery.min.js')}}"></script>
+		<link rel="stylesheet" href="{{url_for('.static', filename='css/bootstrap.min.css')}}">
+		<script src="{{url_for('.static', filename='scripts/bootstrap.bundle.min.js')}}"></script>
+		<script type="text/javascript" src="{{url_for('.static', filename='scripts/app.js')}}"></script>
+		<link rel="icon" type="image/png" href="{{url_for('.static', filename='images/favico.png')}}">
+		<style type="text/css">
+			.modal-full {
+				min-width: 100%;
+				margin: 0;
+			}
+			.modal-full .modal-content {
+				min-height: 100vh;
+			}
+		</style>
+	</head>
+	<header>
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			<div class="navbar-header">
+				<a href="home.html"><img src="{{url_for('.static', filename='images/logo.png')}}" style="height: 44px;"/></a>
+				<a class="navbar-brand" href="home.html">InteractOA</a>
+			</div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="jumbotron">
-                    <h3>Welcome to InteractOA!</h3>
-                    <br/>
-                    <p>
-                        InteractOA is a visual interactive tool to visualize the RNA interactions inside prokaryotic cells and cite these interactions to the literature based on an Open Access (OA) platform "Wikidata"!
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="row align-items-center justify-content-center">
-            <div class="col-lg-10">
-                <div class="panel panel-default">
-                    <div class="card bg-dark text-white">Viewer</div>
-                    <div class="card-body">
-                        <form>
-                            <label for="organism">Select organism: </label>
-                            <select name="organism" id="organism" class="form-control">
-                                <option value="Q21102938">Escherichia coli str. K-12 substr. MG1655</option>
-                            </select>
-                            <br/>
-                            <label for="viewer_type">Select viewer type: </label>
-                            <select name="viewer_type" id="viewer_type" class="form-control">
-                                 <option value="Graph" selected>Graph</option>
-                                 <option value="Tree">Tree</option>
-                                 <option value="TreeMap">Tree Map</option>
-                                 <option value="Table">Tabular</option>
-                            </select>
-                            <br/>
-                            <div class="float-right">
-                                <button class="btn-lg" type="button" onclick="open_viewer(document.getElementById('organism').value, document.getElementById('viewer_type').value)">View</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item dropdown">
+						<a href="#" class="btn nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown"><img src="{{url_for('.static', filename='images/info.png')}}" style="height: 44px;"/></a>
+						<div class="dropdown-menu dropdown-menu-right">
+							<a class="btn dropdown-item" data-toggle="modal" data-target="#AboutModal">About InteractOA</a>
+							<a class="btn dropdown-item" data-toggle="modal" data-target="#HelpModal">Help & FAQ</a>
+							<a class="btn dropdown-item" data-toggle="modal" data-target="#SourceModal">Sources</a>
+							<a class="btn dropdown-item" data-toggle="modal" data-target="#TermsModal">Usage Terms & License</a>
+							<a class="btn dropdown-item" data-toggle="modal" data-target="#ContactModal">Contact Us</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<body>
 
-            </div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="jumbotron">
+						<h3>Welcome to InteractOA!</h3>
+						<br/>
+						<p>
+							InteractOA is a visual interactive tool to visualize the RNA interactions inside prokaryotic cells and cite these interactions to the literature based on an Open Access (OA) platforms.
+							</br> It's a freely open, editable, and centralized database for the biological research community.
+							</br>  Powered by: Wikidata and Europe Pubmed Central.
+						</p>
+					</div>
+				</div>
+			</div>
 
-        </div>
+			<form id="form">
+				<div class="row align-items-center justify-content-center">
+					<div class="col-lg-10">
+						<div class="card bg-dark">
+							<div class="card-body">
+								<div style="display: inline-block;">
+									<h3 class="text-light card-title">Set Visual Preferences:</h3>
+								</div>
+								<div class="float-right">
+									<button class="btn-lg btn-light" type="button" onclick="generate_query();" data-toggle="modal" data-target="#VisualizerModal">
+										Go
+									</button>
+								</div>
+							</div>
 
-    </div>
-</body>
-<footer>
-    <div class="page-footer font-small blue pt-4 mt-4">
-    	
-		
-    </div>
-</footer>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="row align-items-center justify-content-center">
+
+					<div class="col-lg-5">
+						<label >Select organism: </label>
+						<select name="organism" id="organism" class="form-control">
+							<option value="Q21102938">Escherichia coli str. K-12 substr. MG1655</option>
+						</select>
+						<label>Select viewer type: </label>
+						<select name="viewer_type" id="viewer_type" class="form-control">
+							<option value="Graph" selected>Graph</option>
+							<option value="Tree">Tree</option>
+							<option value="TreeMap">Tree Map</option>
+							<option value="Table">Tabular</option>
+						</select>
+
+						<label>Search Words: </label>
+						<input type="text" id="WORDS" name="WORDS" class="form-control">
+						</br>
+						<div class="card bg-light form-group">
+							</br>
+							<h4 class="card-title">Select RNA types:</h4>
+							<div id="filters" class="checkbox card-body" >
+								<input type="checkbox" id="RNA_TYPE1" name="RNA_TYPE" value="Q11053" checked>
+								<label> RNA</label></br>
+								<input type="checkbox" id="RNA_TYPE2" name="RNA_TYPE" value="Q427087" checked>
+								<label> non-coding RNA</label></br>
+								<input type="checkbox" id="RNA_TYPE3" name="RNA_TYPE" value="Q423832" checked>
+								<label> Antisense RNA</label></br>
+								<input type="checkbox" id="RNA_TYPE4" name="RNA_TYPE" value="Q201448">
+								<label> transfer RNA</label></br>
+								<input type="checkbox" id="RNA_TYPE5" name="RNA_TYPE" value="Q285904" checked>
+								<label> transfer-messenger RNA</label></br>
+								<input type="checkbox" id="RNA_TYPE6" name="RNA_TYPE" value="Q424665" checked>
+								<label> single recognition partcile</label></br>
+								<input type="checkbox" id="RNA_TYPE7" name="RNA_TYPE" value="Q1012651" checked>
+								<label> RNase P</label></br>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-5">
+						</br>
+						<div id="OPTIONAL" class="checkbox form-control">
+							<input type="checkbox" id="OPTIONAL_INTERACT" name="OPTIONAL_INTERACT" value="optional">
+							<label>Include non-interacted records</label>
+							<br>
+							<input type="checkbox" id="ONLY_NO_INTERACT" name="ONLY_NO_INTERACT" value="only_no_interacted">
+							<label>Show only non-interacted records</label>
+							<br>
+						</div>
+						</br>
+						<div class="card bg-light form-group">
+							</br>
+							<h4 class="card-title">Select interactions types:</h4>
+							<div id="shows" class="checkbox card-body" >
+								<input type="checkbox" id="SHOW_TYPE1" name="SHOW_TYPE" value="P128" checked>
+								<label> Regulates</label></br>
+								<input type="checkbox" id="SHOW_TYPE2" name="SHOW_TYPE" value="P3777" checked>
+								<label> Anti Sense Inhibitor</label></br>
+								<input type="checkbox" id="SHOW_TYPE3" name="SHOW_TYPE" value="P3773" checked>
+								<label> Antagonist</label></br>
+								<input type="checkbox" id="SHOW_TYPE4" name="SHOW_TYPE" value="P3776" checked>
+								<label> Inhibitor</label></br>
+								<input type="checkbox" id="SHOW_TYPE5" name="SHOW_TYPE" value="P3771" checked>
+								<label> Activator</label></br>
+								<input type="checkbox" id="SHOW_TYPE6" name="SHOW_TYPE" value="P3774" checked>
+								<label> Blocker</label></br>
+								<input type="checkbox" id="SHOW_TYPE7" name="SHOW_TYPE" value="P3772" checked>
+								<label> Agonist</label></br>
+								<input type="checkbox" id="SHOW_TYPE8" name="SHOW_TYPE" value="P3775">
+								<label> Disrupting Agent</label></br>
+								<input type="checkbox" id="SHOW_TYPE9" name="SHOW_TYPE" value="P3778">
+								<label> Positive Allosteric Modulator</label></br>
+								<input type="checkbox" id="SHOW_TYPE10" name="SHOW_TYPE" value="P3779">
+								<label> Negative Allosteric Modulator</label></br>
+								<input type="checkbox" id="SHOW_TYPE11" name="SHOW_TYPE" value="P3781">
+								<label> Has Active Ingedient</label></br>
+								<input type="checkbox" id="SHOW_TYPE12" name="SHOW_TYPE" value="P3780">
+								<label> Active Ingredient of</label></br>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</form>
+		</div>
+		<div id="VisualizerModal" class="modal fade" role="dialog">
+			<div class="modal-dialog modal-full modal-dialog-centered">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Visualizer</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+
+					</div>
+					<div id="Vis_div" class="modal-body">
+						<iframe class="embed-responsive-item" id="Visualizer" scrolling="auto"></iframe>
+					</div>
+				</div>
+				<!--<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>-->
+			</div>
+
+		</div>
+		</div>
+		<div id="AboutModal" class="modal fade" role="dialog">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">About InteractOA</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+
+					</div>
+					<div class="modal-body">
+						<h5>InteractOA</h5>
+						<p>
+							InteractOA is tool to interactively visualize genomic RNA interactions based on an open access biological content of <a href="www.wikidata.org">Wikidata</a>.
+							In addition to this, It also provides seamless hasslefree references to the claiming statements of the interactions that are mentioned in the Open Access scientific literature.
+							The current source of these references is <a href="https://europepmc.org/">Europe PubMed Central</a>.
+							This tool is developed to push the wheels of Open Science and to help the biological research community.
+							This tool is still in the prototyping phase.
+						</p>
+						<h5>Related Projects</h5>
+						<a href="http://wikigenomes.org/">WikiGenomes</a></br>
+						<a href="https://en.wikipedia.org/wiki/Wikipedia:Gene_Wiki">GeneWiki</a></br>
+						<a href="https://www.wikidata.org/wiki/Wikidata:WikiProject_Molecular_biology">Wikidata Project Molecular Biology</a></br>
+						<a href="https://www.wikidata.org/wiki/Wikidata:WikiProject_Microbiology">Wikidata Project Microbiology</a></br>
+					</div>
+					<!--<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>-->
+				</div>
+
+			</div>
+		</div>
+		<div id="HelpModal" class="modal fade" role="dialog">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Help & FAQ</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+
+					</div>
+					<div class="modal-body">
+						<p>
+							TBA
+						</p>
+					</div>
+					<!--<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>-->
+				</div>
+
+			</div>
+		</div>
+		<div id="SourceModal" class="modal fade" role="dialog">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Sources</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+
+					</div>
+					<div class="modal-body">
+						<h5>Source code can be found here:</h5>
+						<ul>
+							<li>
+								<a href="https://github.com/elhossary/InteractOA">Github</a>
+							</li>
+							<li>
+								<a href="https://phabricator.wikimedia.org/source/tool-interactoa/">Phabricator</a>
+							</li>
+						</ul>
+						</br>
+
+						<h5>Source code for related tools that used to import data to wikidata:</h5>
+						<ul>
+							<li>
+								GFF gene annotation importing tool <a href="https://github.com/elhossary/WD_GFF_Annotation_Importer-v1">Github</a>
+							</li>
+							<li>
+								RegulonDB interactions importing tool <a href="https://github.com/elhossary/RegulonDB-Interactions-Wikidata-Importing-Tool-v1">Github</a>
+							</li>
+						</ul>
+					</div>
+					<!--<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>-->
+				</div>
+
+			</div>
+		</div>
+		<div id="TermsModal" class="modal fade" role="dialog">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Usage Terms & License</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+
+					</div>
+					<div class="modal-body">
+						<p>
+							InteractOA is hosted at: <a href="https://tools.wmflabs.org/">Wikimedia Foundation Labs Toolforge</a>.
+							All data of the interactions and gene annotations are hosted in <a href="www.wikidata.org">Wikidata</a>.
+							No literature is hosted in InteractOA, InteractOA only refere to the articles in it's original source <a href="https://europepmc.org/">Europe PubMed Central</a>.
+							All data of InteractOA are licensed under <a href="https://wiki.creativecommons.org/wiki/CC0">CC-0 Public Domain</a>.
+							All source codes are licensed under <a href="https://en.wikipedia.org/wiki/ISC_license">ISC license</a>.
+						</p>
+					</div>
+					<!--<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>-->
+				</div>
+
+			</div>
+		</div>
+		<div id="ContactModal" class="modal fade" role="dialog">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Contact Us</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+
+					</div>
+					<div class="modal-body">
+						You can reach us through the following links:
+						</br>
+						<a href="https://meta.wikimedia.org/wiki/User:Konrad_Foerstner">Konrad Foerstner</a>
+						</br>
+						<a href="https://meta.wikimedia.org/wiki/User:Muhammad_elhossary">Muhammad Elhossary</a>
+					</div>
+					<!--<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>-->
+				</div>
+
+			</div>
+		</div>
+	</body>
+	<!-- <footer>
+		<div class="page-footer font-small blue pt-4 mt-4">
+			<div class="container">
+				<div class="row"></div>
+			</div>
+		</div>
+	</footer>-->
 </html>
