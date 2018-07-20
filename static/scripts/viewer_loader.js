@@ -8,11 +8,17 @@ function getQueryStringParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
 function viewer_loader() {
-	$('#iframe_viewer').attr('src', "https://query.wikidata.org/embed.html#" + getQueryStringParameterByName('wd_query'));
-    $('#cited_link').attr('href', "Cited_records.html?organism=" + getQueryStringParameterByName('organism'));
-    var width = getQueryStringParameterByName('frame_width');
-	var height = parseInt(getQueryStringParameterByName('frame_height')) - parseInt($('#first_row').height());
-	width = width - (width * 0.02);
-	height = height - (height * 0.02);
-	$('#iframe_viewer').attr('style', "border: none; " + "width: " + width + "px; height: " + height + "px;");
+	var doc_url = $('#hidden_anchor', parent.document).prop('href');
+	var encoded_query = encodeURIComponent(getQueryStringParameterByName('query', doc_url));
+	var organism_qid = getQueryStringParameterByName('organism', doc_url);
+	var parent_iframe_width = parseInt($('#parent_iframe', parent.document).css('width'));
+	var parent_iframe_height = parseInt($('#parent_iframe', parent.document).css('height'));
+	var first_row_height = parseInt($('#first_row').css('height'));
+	var width = (parent_iframe_width * 0.99) + "px";
+	var height = ((parent_iframe_height - first_row_height) * 0.98) + "px";
+	$('#iframe_viewer').prop('src', "https://query.wikidata.org/embed.html#" + encoded_query);
+	$('#iframe_viewer').css('border', "none");
+	$('#iframe_viewer').css('width', width);
+	$('#iframe_viewer').css('height', height);
+	$('#cited_link').prop('href', "Cited_records.html?organism=" + organism_qid);
 };

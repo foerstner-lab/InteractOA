@@ -113,8 +113,9 @@ def return_viewer_query():
     words = request.args.get('words', default=None, type=None)
     is_interacted = request.args.get('is_interacted', default=None, type=None)
     only_no_interacted = request.args.get('only_no_interacted', default=None, type=None)
-    return jsonify(results=WDQueryGenerator(organism_qid, view_type, filters, shows, words, is_interacted,
-                                            only_no_interacted).generate_query())
+    query = WDQueryGenerator(organism_qid, view_type, filters, shows, words, is_interacted,
+                             only_no_interacted).generate_query()
+    return jsonify(results=query)
 
 
 if __name__ == '__main__':

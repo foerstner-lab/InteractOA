@@ -51,5 +51,5 @@ class WDQueryGenerator:
         if query_search_statement != "":
             query_search_statement = "FILTER(" + query_search_statement + ")\n"
             generated_query = query_header + "{" + generated_query + "}\n" + query_search_statement + "}"
-        generated_query = "#defaultView:" + self.view_type + '\n' + generated_query
+        generated_query = "#defaultView:" + self.view_type + "\n" + generated_query
         return generated_query
