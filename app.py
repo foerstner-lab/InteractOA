@@ -25,7 +25,7 @@ def get_wd_label(QID):
 
 
 def get_sRNA__QID_list(QID):
-    query_file = open('ALL__INTERACTED_SRNA_QUERY.rq', 'r')
+    query_file = open('ALL_INTERACTED_SRNA_QUERY.rq', 'r')
     query_template = query_file.read()
     QUERY = query_template
     QUERY = QUERY.replace("#QID#", QID)

@@ -15,10 +15,13 @@ function viewer_loader() {
 	var parent_iframe_height = parseInt($('#parent_iframe', parent.document).css('height'));
 	var first_row_height = parseInt($('#first_row').css('height'));
 	var width = (parent_iframe_width * 0.99) + "px";
-	var height = ((parent_iframe_height - first_row_height) * 0.98) + "px";
+	var height = ((parent_iframe_height - first_row_height) * 0.95) + "px";
 	$('#iframe_viewer').prop('src', "https://query.wikidata.org/embed.html#" + encoded_query);
 	$('#iframe_viewer').css('border', "none");
 	$('#iframe_viewer').css('width', width);
 	$('#iframe_viewer').css('height', height);
 	$('#cited_link').prop('href', "Cited_records.html?organism=" + organism_qid);
 };
+$(document).ready(function(){
+	$('#VisualizerModalTitle', parent.document).html('Interactions Visualization');
+});

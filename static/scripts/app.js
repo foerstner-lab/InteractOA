@@ -39,11 +39,11 @@ $(document).ready(function() {
 	    	$( "#OPTIONAL_INTERACT").removeAttr("disabled");
 	    }
 	});
-});
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip(); 
+	//---------------------------------------------
+	$('[data-toggle="tooltip"]').tooltip();
+	//--------------------------------------------- 
     $('#VisualizerModal').on('shown.bs.modal', function (e) {
-  		var height = parseInt($('#Vis_div').css('height')) * 0.95;
+  		var height = parseInt($('#Vis_div').css('height')) * 0.94;
     	var width = parseInt($('#Vis_div').css('width')) * 0.97;
     	var QS = "?query=" + global_var_query + "&organism=" + global_var_organism;
     	$('#parent_iframe').prop('src', "viewer.html");
