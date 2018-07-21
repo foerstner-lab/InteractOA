@@ -6,6 +6,7 @@ import urllib.parse
 import re
 from WDQueryGenerator import *
 
+
 def get_wd_label(QID):
     query_file = open('Label_Fetch_Query.rq', 'r')
     query_template = query_file.read()
@@ -23,65 +24,42 @@ def get_wd_label(QID):
     query_file.close()
     return item
 
-
-def get_sRNA__QID_list(QID):
+def get_interacted_RNA_references(QID):
+    interacted_RNA_references = []
+    row_nums = 0
     query_file = open('ALL_INTERACTED_SRNA_QUERY.rq', 'r')
     query_template = query_file.read()
+    query_file.close()
     QUERY = query_template
     QUERY = QUERY.replace("#QID#", QID)
     results = WDItemEngine.execute_sparql_query(QUERY)['results']['bindings']
-    sRNA_QID_list = []
     if len(results) != 0:
         for result in results:
-            if 'target' in result:
-                if str(result['rna']['value']).replace("http://www.wikidata.org/entity/", "") not in sRNA_QID_list:
-                    sRNA_QID_list.append(str(result['rna']['value']).replace("http://www.wikidata.org/entity/", ""))
+            row_nums += 1
+            interacted_RNA_references.append([row_nums, result['rnaLabel']['value'], result['propLabel']['value'],
+                                              result['targetLabel']['value'],
+                                              '<a href="Article_Viewer.html?article_PMCID=' + result['PMCID']['value'] +
+                                              '&quote=' + urllib.parse.quote_plus(result['quote']['value']) +
+                                              '">Read article</a>', result['quote']['value'],
+                                                  '<div class="form-control"><a href="' +
+                                              result['rna']['value'] +
+                                              '"><img src="/static/images/Interact_logo_Wikidata.png"' +
+                                              'style="max-height: 30px;" class="rounded"></a></div>'])
     else:
         print("Query returns nothing.")
-    return sRNA_QID_list
-
-
-def get_HTML_cited_QID(sRNA_QID_list, Organism_QID):
-    r_list = []
-    row_nums = 0
-    REG_PROP_df = pd.read_csv('REGULATORY_PROPERTIES.CSV', sep=',', names=['PROPERTY', 'PROPERTY_LABEL'])
-    query_file = open('QUERY.rq', 'r')
-    query_template = query_file.read()
-    for sRNA_QID in sRNA_QID_list:
-        for index, row in REG_PROP_df.iterrows():
-            QUERY = query_template
-            QUERY = QUERY.replace("#SRNA_QID#", sRNA_QID)
-            QUERY = QUERY.replace("#REG_PROPERTY#", row['PROPERTY'])
-            results = WDItemEngine.execute_sparql_query(QUERY)['results']['bindings']
-            if len(results) != 0:
-                for result in results:
-                    if 'PMCID' in result:
-                        row_nums += 1
-                        r_list.append([row_nums,
-                                       get_wd_label(sRNA_QID),
-                                       row['PROPERTY_LABEL'],
-                                       result['geneLabel']['value'],
-                                       '<a href="Article_Viewer.html?article_PMCID=' + result['PMCID']['value'] +
-                                       '&quote=' + urllib.parse.quote_plus(result['quote']['value']) +
-                                       '">Read article</a>',
-                                       result['quote']['value'],
-                                      '<div class="form-control"><a href="http://www.wikidata.org/entity/' + sRNA_QID +
-                                       '"><img src="/static/images/Interact_logo_Wikidata.png"' +
-                                       'style="max-height: 30px;" class="rounded"></a></div>'])
-    data_tbl = HTML.table(r_list, header_row=['#', 'sRNA', 'Type of Regulation', 'Target Gene', 'Article Link', 'Quote',
-                                              'Source'])
-
-    final_html = "<div><h2>Referenced items: " + get_wd_label(Organism_QID) + '</h2></div>' +\
+    print(interacted_RNA_references)
+    data_tbl = HTML.table(interacted_RNA_references,
+                          header_row=['#', 'sRNA', 'Type of Regulation', 'Target Gene', 'Article Link', 'Quote',
+                                      'Source'])
+    final_html = "<div><h4>Referenced items: " + get_wd_label(QID) + '</h4></div>' +\
                  re.sub('(?<=TABLE)(.*)(?=>)', ' id="data_tbl" class="table table-striped table-sm table-bordered ' +
                         'table-hover table-responsive-sm" style="font-family: Courier New; font-size: small;"',
                         data_tbl)
+    print(final_html)
     return final_html
 
-
 def run_script(organism_QID):
-    sRNA_QID_list = get_sRNA__QID_list(organism_QID)
-    htmlcode = get_HTML_cited_QID(sRNA_QID_list, organism_QID)
-    return htmlcode
+    return get_interacted_RNA_references(organism_QID)
 
 
 app = Flask(__name__)

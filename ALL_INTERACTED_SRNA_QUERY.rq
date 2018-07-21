@@ -1,5 +1,6 @@
-SELECT DISTINCT ?rna ?target WHERE {
-      ?rna wdt:P703 wd:#QID#.
+SELECT DISTINCT ?rna ?rnaLabel ?propLabel ?targetLabel ?quote ?PMCID WHERE {
+{SELECT DISTINCT ?rna ?rnaLabel ?prop ?propLabel ?target ?targetLabel WHERE {
+  ?rna wdt:P703 wd:#QID#.
   {
       { ?rna wdt:P31 wd:Q11053. }
       UNION { ?rna wdt:P31 wd:Q427087. }
@@ -30,4 +31,48 @@ SELECT DISTINCT ?rna ?target WHERE {
   union { ?rna wdt:P3781 ?target. }
   union { ?rna wdt:P3780 ?target. }
     }
+  ?rna ?propvar ?target.
+  ?prop wikibase:directClaim ?propvar .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".}
+}}
+  {
+    {?rna p:P128?statement.
+  ?statement ps:P128 ?target.}
+    union
+    {?rna p:P3777 ?statement.
+  ?statement ps:P3777 ?target.}
+    union
+    {?rna p:P3773 ?statement.
+  ?statement ps:P3773 ?target.}
+    union
+    {?rna p:P3776 ?statement.
+  ?statement ps:P3776 ?target.}
+    union
+    {?rna p:P3771 ?statement.
+  ?statement ps:P3771 ?target.}
+    union
+    {?rna p:P3774 ?statement.
+  ?statement ps:P3774 ?target.}
+    union
+    {?rna p:P3772 ?statement.
+  ?statement ps:P3772 ?target.}
+    union
+    {?rna p:P3775 ?statement.
+  ?statement ps:P3775 ?target.}
+    union
+    {?rna p:P3778 ?statement.
+  ?statement ps:P3778 ?target.}
+    union
+    {?rna p:P3779 ?statement.
+  ?statement ps:P3779 ?target.}
+    union
+    {?rna p:P3781 ?statement.
+  ?statement ps:P3781 ?target.}
+    union
+    {?rna p:P3780 ?statement.
+  ?statement ps:P3780 ?target.}
+  }
+  ?statement prov:wasDerivedFrom ?refnode.
+  ?refnode   pr:P1683 ?quote.
+  ?refnode   pr:P932 ?PMCID.
 }
