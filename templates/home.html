@@ -8,7 +8,7 @@
 		<script src="{{url_for('.static', filename='scripts/jquery.min.js')}}"></script>
 		<link rel="stylesheet" href="{{url_for('.static', filename='css/bootstrap.min.css')}}">
 		<script src="{{url_for('.static', filename='scripts/bootstrap.bundle.min.js')}}"></script>
-		<script type="text/javascript" src="{{url_for('.static', filename='scripts/app.js')}}"></script>
+		<script type="text/javascript" src="{{url_for('.static', filename='scripts/InteractOA_app.js')}}"></script>
 		<link rel="icon" type="image/png" href="{{url_for('.static', filename='images/favico.png')}}">
 		<style type="text/css">
 			.modal-full {
@@ -48,121 +48,49 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="jumbotron">
-						<h3>Welcome to InteractOA!</h3>
-						<br/>
-						<p>
+						<div align="center">
+							<h3>Welcome to InteractOA!</h3>
+						</div>
+						<div align="justify">
+
 							InteractOA is a visual interactive tool to visualize the RNA interactions inside prokaryotic cells and cite these interactions to the literature based on an Open Access (OA) platforms.
-							</br> It's a freely open, editable, and centralized database for the biological research community.
+							It's a freely open, editable, and centralized database for the biological research community.
 							</br>  Powered by: Wikidata and Europe Pubmed Central.
-						</p>
+						</div>
 					</div>
 				</div>
 			</div>
-
-			<form id="form">
-				<div class="row align-items-center justify-content-center">
-					<div class="col-lg-10">
-						<div class="card bg-dark">
-							<div class="card-body">
-								<div style="display: inline-block;">
-									<h3 class="text-light card-title">Set Visual Preferences:</h3>
-								</div>
-								<div class="float-right">
-									<button id="go_button" class="btn-lg btn-light" type="button" onclick="generate_query();">
-										Go
-									</button>
-								</div>
-							</div>
-
-						</div>
-
+		</div>
+		<div class="container" align="center">
+			<form id="organism_selector">
+				<div class="row justify-content-center text-center" align="center">
+					<div class="col-lg-10" align="center">
+						<p class="blockquote">
+							For an organism of your selection, you can either open the visualizer to see RNA interactions graphs or browse references to literature for each interaction
+						</p>
 					</div>
-
+					<div class="col-lg-8" align="center">
+						<table>
+							<tbody>
+								<tr>
+									<select name="organism" id="organism" class="form-control form-control-lg">
+										<option value="Q21102938">Escherichia coli str. K-12 substr. MG1655</option>
+									</select>
+								</tr>
+								<tr>
+									<td>
+									<button type="button" class="btn btn-outline-secondary btn-lg" style="padding: 10px; margin: 20px;" data-toggle="modal" data-target="#VisualizerModal">
+										Open Visualizer
+									</button></td>
+									<td>
+									<button type="button" class="btn btn-outline-secondary btn-lg" style="padding: 10px; margin: 20px;" data-toggle="modal" data-target="#RefsModal">
+										Browse References
+									</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
-				<div class="row align-items-center justify-content-center">
-
-					<div class="col-lg-5">
-						<label >Select organism: </label>
-						<select name="organism" id="organism" class="form-control">
-							<option value="Q21102938">Escherichia coli str. K-12 substr. MG1655</option>
-						</select>
-						<label>Select viewer type: </label>
-						<select name="viewer_type" id="viewer_type" class="form-control">
-							<option value="Graph" selected>Graph</option>
-							<option value="Tree">Tree</option>
-							<option value="TreeMap">Tree Map</option>
-							<option value="Table">Tabular</option>
-						</select>
-
-						<label>Search Words: </label>
-						<input type="text" id="WORDS" name="WORDS" class="form-control" data-toggle="tooltip" title="Searches ONLY in RNA, not in the target genes.">
-						</br>
-						<div class="card bg-light form-group" data-toggle="tooltip" title="Note: Checking RNA and non-coding RNA may include other unchecked ones because they are generic. Therefore, unchecking them may exclude some desired records. It depends on how the data was imported.">
-							</br>
-							<h4 class="card-title">Select RNA types:</h4>
-							<div id="filters" class="checkbox card-body" >
-								<input type="checkbox" id="RNA_TYPE1" name="RNA_TYPE" value="Q11053" checked>
-								<label> RNA</label></br>
-								<input type="checkbox" id="RNA_TYPE2" name="RNA_TYPE" value="Q427087" checked>
-								<label> non-coding RNA</label></br>
-								<input type="checkbox" id="RNA_TYPE3" name="RNA_TYPE" value="Q423832" checked>
-								<label> Antisense RNA</label></br>
-								<input type="checkbox" id="RNA_TYPE4" name="RNA_TYPE" value="Q201448">
-								<label> transfer RNA</label></br>
-								<input type="checkbox" id="RNA_TYPE5" name="RNA_TYPE" value="Q285904" checked>
-								<label> transfer-messenger RNA</label></br>
-								<input type="checkbox" id="RNA_TYPE6" name="RNA_TYPE" value="Q424665" checked>
-								<label> single recognition partcile</label></br>
-								<input type="checkbox" id="RNA_TYPE7" name="RNA_TYPE" value="Q1012651" checked>
-								<label> RNase P</label></br>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-5">
-						</br>
-						<div id="OPTIONAL" class="checkbox form-control">
-							<input type="checkbox" id="OPTIONAL_INTERACT" name="OPTIONAL_INTERACT" value="optional">
-							<label>Include non-interacted records</label>
-							<br>
-							<input type="checkbox" id="ONLY_NO_INTERACT" name="ONLY_NO_INTERACT" value="only_no_interacted">
-							<label>Show only non-interacted records</label>
-							<br>
-						</div>
-						</br>
-						<div class="card bg-light form-group">
-							</br>
-							<h4 class="card-title">Select interactions types:</h4>
-							<div id="shows" class="checkbox card-body" >
-								<input type="checkbox" id="SHOW_TYPE1" name="SHOW_TYPE" value="P128" checked>
-								<label> Regulates</label></br>
-								<input type="checkbox" id="SHOW_TYPE2" name="SHOW_TYPE" value="P3777" checked>
-								<label> Anti Sense Inhibitor</label></br>
-								<input type="checkbox" id="SHOW_TYPE3" name="SHOW_TYPE" value="P3773" checked>
-								<label> Antagonist</label></br>
-								<input type="checkbox" id="SHOW_TYPE4" name="SHOW_TYPE" value="P3776" checked>
-								<label> Inhibitor</label></br>
-								<input type="checkbox" id="SHOW_TYPE5" name="SHOW_TYPE" value="P3771" checked>
-								<label> Activator</label></br>
-								<input type="checkbox" id="SHOW_TYPE6" name="SHOW_TYPE" value="P3774" checked>
-								<label> Blocker</label></br>
-								<input type="checkbox" id="SHOW_TYPE7" name="SHOW_TYPE" value="P3772" checked>
-								<label> Agonist</label></br>
-								<input type="checkbox" id="SHOW_TYPE8" name="SHOW_TYPE" value="P3775">
-								<label> Disrupting Agent</label></br>
-								<input type="checkbox" id="SHOW_TYPE9" name="SHOW_TYPE" value="P3778">
-								<label> Positive Allosteric Modulator</label></br>
-								<input type="checkbox" id="SHOW_TYPE10" name="SHOW_TYPE" value="P3779">
-								<label> Negative Allosteric Modulator</label></br>
-								<input type="checkbox" id="SHOW_TYPE11" name="SHOW_TYPE" value="P3781">
-								<label> Has Active Ingedient</label></br>
-								<input type="checkbox" id="SHOW_TYPE12" name="SHOW_TYPE" value="P3780">
-								<label> Active Ingredient of</label></br>
-							</div>
-						</div>
-					</div>
-
-				</div>
-
 			</form>
 		</div>
 		<div id="VisualizerModal" class="modal fade" role="dialog">
@@ -171,15 +99,119 @@
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 id="VisualizerModalTitle" class="modal-title"></h5>
+						<h5 id="VisualizerModalTitle" class="modal-title">Interactions Visualization</h5>
 						<button type="button" class="close" data-dismiss="modal">
 							&times;
 						</button>
-
 					</div>
-					<div id="Vis_div" class="modal-body bg-light">
-						<a id="hidden_anchor" href=""></a>
-						<iframe class="embed-responsive-item" name="parent_iframe" id="parent_iframe" scrolling="auto" referrerpolicy="origin" style="display:block; padding: 0px; margin: 0px;" sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation"></iframe>
+					<div id="Vis_div" class="modal-body bg-light container-fluid">
+
+						<div id="div_visualizer_settings">
+							<form id="settings_form">
+								<div class="row align-items-center justify-content-center">
+									<div class="col-lg-6" align="center">
+										<div style="display: inline-block;">
+											<h4>Set Visual Preferences:</h4>
+										</div>
+									</div>
+								</div>
+								<div class="row align-items-center justify-content-center">
+									<div class="col-lg-5 table-responsive-lg">
+										<table class="table-borderless" style="width:100%">
+											<tbody>
+												<tr>
+													<td><label>Select viewer type: </label></td>
+													<td>
+													<select name="viewer_type" id="viewer_type" class="form-control form-control-sm">
+														<option value="Graph" selected>Graph</option>
+														<option value="Tree">Tree</option>
+														<option value="TreeMap">Tree Map</option>
+														<option value="Table">Tabular</option>
+													</select></td>
+												</tr>
+												<tr>
+													<td><label>Search Words: </label></td>
+													<td>
+													<input type="text" id="WORDS" name="WORDS" class="form-control form-control-sm" data-toggle="tooltip" title="Searches ONLY in RNA, not in the target genes.">
+													</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+									<div class="col-lg-1 table-responsive-lg">
+										<button id="view_button" class="btn btn-lg btn-outline-dark" type="button" onclick="button_view_on_click()">
+											View
+										</button>
+									</div>
+								</div>
+								<div class="row align-items-center justify-content-center">
+									<div class="col-lg-3">
+										<div class="card bg-light form-group" data-toggle="tooltip" title="Note: Checking RNA and non-coding RNA may include other unchecked ones because they are generic. Therefore, unchecking them may exclude some desired records. It depends on how the data was imported.">
+
+											<h6 class="card-title">Select RNA types:</h6>
+											<div id="filters" class="checkbox card-body" >
+												<input type="checkbox" id="RNA_TYPE1" name="RNA_TYPE" value="Q11053" checked>
+												<label> RNA</label></br>
+												<input type="checkbox" id="RNA_TYPE2" name="RNA_TYPE" value="Q427087" checked>
+												<label> non-coding RNA</label></br>
+												<input type="checkbox" id="RNA_TYPE3" name="RNA_TYPE" value="Q423832" checked>
+												<label> Antisense RNA</label></br>
+												<input type="checkbox" id="RNA_TYPE4" name="RNA_TYPE" value="Q201448">
+												<label> transfer RNA</label></br>
+												<input type="checkbox" id="RNA_TYPE5" name="RNA_TYPE" value="Q285904" checked>
+												<label> transfer-messenger RNA</label></br>
+												<input type="checkbox" id="RNA_TYPE6" name="RNA_TYPE" value="Q424665" checked>
+												<label> single recognition partcile</label></br>
+												<input type="checkbox" id="RNA_TYPE7" name="RNA_TYPE" value="Q1012651" checked>
+												<label> RNase P</label>
+											</div>
+										</div>
+										<div id="OPTIONAL" class="checkbox form-control form-control-sm">
+											<input type="checkbox" id="OPTIONAL_INTERACT" name="OPTIONAL_INTERACT" value="optional">
+											<label>Include non-interacted records</label>
+											<br>
+											<input type="checkbox" id="ONLY_NO_INTERACT" name="ONLY_NO_INTERACT" value="only_no_interacted">
+											<label>Show only non-interacted records</label>
+											<br>
+										</div>
+									</div>
+									<div class="col-lg-3">
+										<div class="card bg-light form-group">
+											<h6 class="card-title">Select interactions types:</h6>
+											<div id="shows" class="checkbox card-body" >
+												<input type="checkbox" id="SHOW_TYPE1" name="SHOW_TYPE" value="P128" checked>
+												<label> Regulates</label></br>
+												<input type="checkbox" id="SHOW_TYPE2" name="SHOW_TYPE" value="P3777" checked>
+												<label> Anti Sense Inhibitor</label></br>
+												<input type="checkbox" id="SHOW_TYPE3" name="SHOW_TYPE" value="P3773" checked>
+												<label> Antagonist</label></br>
+												<input type="checkbox" id="SHOW_TYPE4" name="SHOW_TYPE" value="P3776" checked>
+												<label> Inhibitor</label></br>
+												<input type="checkbox" id="SHOW_TYPE5" name="SHOW_TYPE" value="P3771" checked>
+												<label> Activator</label></br>
+												<input type="checkbox" id="SHOW_TYPE6" name="SHOW_TYPE" value="P3774" checked>
+												<label> Blocker</label></br>
+												<input type="checkbox" id="SHOW_TYPE7" name="SHOW_TYPE" value="P3772" checked>
+												<label> Agonist</label></br>
+												<input type="checkbox" id="SHOW_TYPE8" name="SHOW_TYPE" value="P3775">
+												<label> Disrupting Agent</label></br>
+												<input type="checkbox" id="SHOW_TYPE9" name="SHOW_TYPE" value="P3778">
+												<label> Positive Allosteric Modulator</label></br>
+												<input type="checkbox" id="SHOW_TYPE10" name="SHOW_TYPE" value="P3779">
+												<label> Negative Allosteric Modulator</label></br>
+												<input type="checkbox" id="SHOW_TYPE11" name="SHOW_TYPE" value="P3781">
+												<label> Has Active Ingedient</label></br>
+												<input type="checkbox" id="SHOW_TYPE12" name="SHOW_TYPE" value="P3780">
+												<label> Active Ingredient of</label>
+											</div>
+										</div>
+									</div>
+							</form>
+						</div>
+					</div>
+					<div id="div_visalizer_iframe">
+						<iframe name="iframe_viewer" id="iframe_viewer" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups" style="display:block; padding: 0px; margin: 0px;"></iframe>
 					</div>
 				</div>
 				<!--<div class="modal-footer">
@@ -188,6 +220,28 @@
 			</div>
 
 		</div>
+		</div>
+		<div id="RefsModal" class="modal fade" role="dialog">
+			<div class="modal-dialog modal-full modal-dialog-centered">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 id="RefsModalTitle" class="modal-title"></h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+
+					</div>
+					<div id="refs_div" class="modal-body bg-light container-fluid">
+						<iframe name="refs_iframe" id="refs_iframe" scrolling="auto" style="display:block; padding: 0px; margin: 0px;"></iframe>
+					</div>
+					<!--<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>-->
+				</div>
+
+			</div>
 		</div>
 		<div id="AboutModal" class="modal fade" role="dialog">
 			<div class="modal-dialog modal-lg modal-dialog-centered">

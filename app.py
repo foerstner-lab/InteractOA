@@ -1,6 +1,5 @@
 from flask import *
 from wikidataintegrator.wdi_core import WDItemEngine
-import pandas as pd
 import HTML
 import urllib.parse
 import re
@@ -44,10 +43,9 @@ def get_interacted_RNA_references(QID):
                                                   '<div class="form-control"><a href="' +
                                               result['rna']['value'] +
                                               '"><img src="/static/images/Interact_logo_Wikidata.png"' +
-                                              'style="max-height: 30px;" class="rounded"></a></div>'])
+                                              'height="30px" class="rounded"></a></div>'])
     else:
-        print("Query returns nothing.")
-    print(interacted_RNA_references)
+        return "Query returns nothing."
     data_tbl = HTML.table(interacted_RNA_references,
                           header_row=['#', 'sRNA', 'Type of Regulation', 'Target Gene', 'Article Link', 'Quote',
                                       'Source'])
@@ -55,7 +53,6 @@ def get_interacted_RNA_references(QID):
                  re.sub('(?<=TABLE)(.*)(?=>)', ' id="data_tbl" class="table table-striped table-sm table-bordered ' +
                         'table-hover table-responsive-sm" style="font-family: Courier New; font-size: small;"',
                         data_tbl)
-    print(final_html)
     return final_html
 
 def run_script(organism_QID):
@@ -97,5 +94,5 @@ def return_viewer_query():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
 

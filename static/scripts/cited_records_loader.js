@@ -22,5 +22,5 @@ $(document).ready(function() {
 			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 		});
 	});
-	$('#VisualizerModalTitle', parent.document).html('Citations and References');
-}); 
+	$('#RefsModalTitle', parent.document).html('Citations and References');
+});

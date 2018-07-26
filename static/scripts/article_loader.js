@@ -32,6 +32,6 @@ $(document).ready(function() {
 			window.find(search_phrase);
 		}
 	});
-	$('#VisualizerModalTitle', parent.document).html('Article Viewer');
+	$('#RefsModalTitle', parent.document).html('Article Viewer');
 });
 
