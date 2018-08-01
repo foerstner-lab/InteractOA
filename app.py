@@ -1,9 +1,8 @@
 from flask import *
 from wikidataintegrator.wdi_core import WDItemEngine
-import HTML
 import urllib.parse
-import re
 from WDQueryGenerator import *
+import pandas as pd
 
 
 def get_wd_label(QID):
@@ -31,35 +30,41 @@ def get_interacted_RNA_references(QID):
     query_file.close()
     QUERY = query_template
     QUERY = QUERY.replace("#QID#", QID)
+    src_img = "{{url_for('.static', filename='images/Interact_logo_Wikidata.png')}}"
     results = WDItemEngine.execute_sparql_query(QUERY)['results']['bindings']
     if len(results) != 0:
         for result in results:
             row_nums += 1
             interacted_RNA_references.append([row_nums, result['rnaLabel']['value'], result['propLabel']['value'],
                                               result['targetLabel']['value'],
-                                              '<a href="Article_Viewer.html?article_PMCID=' + result['PMCID']['value'] +
+
+                                              result['quote']['value'] +
+                                              '</br><a target="_self" href="Article_Viewer.html?article_PMCID=' +
+                                              result['PMCID']['value'] +
                                               '&quote=' + urllib.parse.quote_plus(result['quote']['value']) +
-                                              '">Read article</a>', result['quote']['value'],
-                                                  '<div class="form-control"><a href="' +
+                                              '">Read this in the article</a>',
+                                                  '<div class="form-control"><a target="_blank" href="' +
                                               result['rna']['value'] +
-                                              '"><img src="/static/images/Interact_logo_Wikidata.png"' +
-                                              'height="30px" class="rounded"></a></div>'])
+                                              '"><img src="static/images/Interact_logo_Wikidata.png"' +
+                                              ' height="30px" class="rounded"></a></div>'])
     else:
         return "Query returns nothing."
-    data_tbl = HTML.table(interacted_RNA_references,
-                          header_row=['#', 'sRNA', 'Type of Regulation', 'Target Gene', 'Article Link', 'Quote',
-                                      'Source'])
-    final_html = "<div><h4>Referenced items: " + get_wd_label(QID) + '</h4></div>' +\
-                 re.sub('(?<=TABLE)(.*)(?=>)', ' id="data_tbl" class="table table-striped table-sm table-bordered ' +
-                        'table-hover table-responsive-sm" style="font-family: Courier New; font-size: small;"',
-                        data_tbl)
+    data_tbl_cols = ['#', 'sRNA', 'Type of Regulation', 'Target Gene', 'Quote', 'Source']
+    data_tbl_df = pd.DataFrame(interacted_RNA_references, columns=data_tbl_cols)
+    pd.set_option('display.max_colwidth', -1)
+    data_tbl = data_tbl_df.to_html(index=False, escape=False, bold_rows=False, max_rows=None, max_cols=None,
+                                   table_id="data_tbl", justify="center")
+    data_tbl = data_tbl.replace('border="1" ',"")
+    data_tbl = data_tbl.replace('class="dataframe" ',
+                                'class="display responsive no-wrap" style="font-family: Courier New; font-size: 13px;"')
+    final_html = "<div><h4>Referenced items: " + get_wd_label(QID) + '</h4></div>' + data_tbl
     return final_html
 
 def run_script(organism_QID):
     return get_interacted_RNA_references(organism_QID)
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 
 @app.route('/', defaults={'path': ''})

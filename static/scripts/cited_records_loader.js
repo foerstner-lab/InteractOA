@@ -15,12 +15,9 @@ $(document).ready(function() {
 		organism_qid : getQueryStringParameterByName("organism")
 	}, function(data) {
 		$('#content').html(data.results);
-	});
-	$("#search").on("keyup", function() {
-		var value = $(this).val().toLowerCase();
-		$("#data_tbl tr").filter(function() {
-			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-		});
+		$('#data_tbl').DataTable({"ordering": false, "autoWidth": false, "lengthChange": true, responsive: {details: false}});
+		$("#data_tbl_filter").children().prop('class', 'form-control form-control-md');
+		$("#data_tbl_length").children().prop('class', 'form-control form-control-md');		
 	});
 	$('#RefsModalTitle', parent.document).html('Citations and References');
 });

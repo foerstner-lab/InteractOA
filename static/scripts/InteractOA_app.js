@@ -34,6 +34,7 @@ function button_view_on_click()
 	$('#iframe_viewer').css('height', global_var_iframe_height + "px");
 	$("#div_visalizer_iframe").show();
 	$("#div_visualizer_settings").hide();
+	$('#iframe_viewer')[0].contentWindow.location.reload(true);
 	//$('#VisualizerModal').modal('handleUpdate');
 };
 $(document).ready(function() {
@@ -53,6 +54,7 @@ $(document).ready(function() {
 	$('#VisualizerModal').on('hidden.bs.modal', function (e) {
 		$("#div_visalizer_iframe").hide();
 		$("#div_visualizer_settings").show();
+		$('#iframe_viewer').prop('src', "");
 	});
 	$('#VisualizerModal').on('shown.bs.modal', function (e) {
 		$("#div_visalizer_iframe").hide();
@@ -66,7 +68,11 @@ $(document).ready(function() {
 		$('#refs_iframe').css('border', "none");
 		$('#refs_iframe').css('width', global_var_iframe_width + "px");
 		$('#refs_iframe').css('height', global_var_iframe_height + "px");
-		console.log(global_var_organism);
 		$('#refs_iframe').prop('src', "Cited_records.html?organism=" + global_var_organism);
+	});
+	//-------------------------------------------------------------
+	$('#RefsModal').on('hidden.bs.modal', function (e) {
+		$('#refs_iframe').prop('src', "");
+		$('#refs_iframe')[0].contentWindow.location.reload(true);
 	});
 });
