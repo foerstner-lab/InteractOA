@@ -11,7 +11,7 @@ function getQueryStringParameterByName(name, url) {
 	return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
 $(document).ready(function() {
-	$.getJSON('python_func', {
+	$.getJSON('fetch_references', {
 		organism_qid : getQueryStringParameterByName("organism")
 	}, function(data) {
 		$('#content').html(data.results);
