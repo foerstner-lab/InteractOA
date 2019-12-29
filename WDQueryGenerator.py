@@ -15,28 +15,27 @@ class WDQueryGenerator:
         generated_query = ""
         query_header = 'SELECT DISTINCT ?rna ?rnaLabel ("FFA500" as ?rgb) ?rnaAltLabel ?targetgene' + \
                           '?targetgeneLabel ?targetgeneAltLabel WHERE{\n'
-
         query_tail = 'SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".}\n}'
         filters_len = len(self.filters)
         query_filters = "?rna wdt:P703 wd:" + self.organism_qid + ".\n{\n"
-        for index, filter in enumerate(self.filters):
-            query_filters += "{?rna wdt:P31 wd:" + filter + ".}\n"
+        for index, fltr in enumerate(self.filters):
+            query_filters += f"{{?rna wdt:P31 wd:{fltr}.}}\n"
             query_filters += "UNION\n"
-            query_filters += "{?rna wdt:P279 wd:" + filter + ".}\n"
+            query_filters += f"{{?rna wdt:P279 wd:{fltr}.}}\n"
             if filters_len != index + 1:
                 query_filters += "UNION\n"
         query_filters += "}\n"
         shows_len = len(self.shows)
         query_shows = "{\n"
         for index, show in enumerate(self.shows):
-            query_shows += "{?rna wdt:" + show + " ?targetgene.}\n"
+            query_shows += f"{{?rna wdt:{show}?targetgene.}}\n"
             if shows_len != index + 1:
                 query_shows += "UNION\n"
         query_shows += "}\n"
-        if self.is_interacted == "optional" and self.only_no_interacted != "only_no_interacted":
-            query_shows = "OPTIONAL " + query_shows
+        if self.is_interacted == "optional" and self.only_no_interacted != "only_query_headerno_interacted":
+            query_shows = f"OPTIONAL {query_shows}"
         elif self.only_no_interacted == "only_no_interacted" and self.is_interacted != "optional":
-            query_shows = "FILTER NOT EXISTS " + query_shows
+            query_shows = f"FILTER NOT EXISTS {query_shows}"
         for empty_word in search_words_list:
             if empty_word == "":
                 del empty_word
@@ -49,7 +48,7 @@ class WDQueryGenerator:
                         query_search_statement += "\n||\n"
         generated_query = query_header + query_filters + query_shows + query_tail
         if query_search_statement != "":
-            query_search_statement = "FILTER(" + query_search_statement + ")\n"
-            generated_query = query_header + "{" + generated_query + "}\n" + query_search_statement + "}"
-        generated_query = "#defaultView:" + self.view_type + "\n" + generated_query
+            query_search_statement = f"FILTER({query_search_statement})\n"
+            generated_query = f"{query_header}{{{generated_query}}}\n{query_search_statement}}}"
+        generated_query = f"#defaultView:{self.view_type}\n{generated_query}"
         return generated_query

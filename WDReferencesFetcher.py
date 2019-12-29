@@ -39,16 +39,15 @@ class WDReferencesFetcher:
                 row_nums += 1
                 interacted_RNA_references.append([row_nums, result['rnaLabel']['value'], result['propLabel']['value'],
                                                   result['targetLabel']['value'],
-
-                                                  result['quote']['value'] +
-                                                  '</br><a target="_self" href="Article_Viewer.html?article_PMCID=' +
-                                                  result['PMCID']['value'] +
-                                                  '&quote=' + urllib.parse.quote_plus(result['quote']['value']) +
+                                                  f"{result['quote']['value']}"
+                                                  '</br><a target="_self" href="Article_Viewer.html?article_PMCID='
+                                                  f"{result['PMCID']['value']}"
+                                                  f"&quote={urllib.parse.quote_plus(result['quote']['value'])}"
                                                   '">Read this in the article</a>',
-                                                  '<div class="form-control"><a target="_blank" href="' +
-                                                  result['rna']['value'] +
-                                                  '"><img src="static/images/Interact_logo_Wikidata.png"' +
-                                                  ' height="30px" class="rounded"></a></div>'])
+                                                  '<div class="form-control"><a target="_blank" href="'
+                                                  f"{result['rna']['value']}"
+                                                  '"><img src="static/images/Interact_logo_Wikidata.png" '
+                                                  'height="30px" class="rounded"></a></div>'])
         else:
             return "Query returns nothing."
         data_tbl_cols = ['#', 'sRNA', 'Type of Regulation', 'Target Gene', 'Quote', 'Source']
@@ -57,7 +56,7 @@ class WDReferencesFetcher:
         data_tbl = data_tbl_df.to_html(index=False, escape=False, bold_rows=False, max_rows=None, max_cols=None,
                                        table_id="data_tbl", justify="center")
         data_tbl = data_tbl.replace('border="1" ', "")
-        data_tbl = data_tbl.replace('class="dataframe" ', 'class="display responsive no-wrap" ' +
+        data_tbl = data_tbl.replace('class="dataframe" ', 'class="display responsive no-wrap" '
                                     'style="font-family: Courier New; font-size: 13px;"')
-        final_html = "<div><h4>Referenced items: " + self.get_wd_label() + '</h4></div>' + data_tbl
+        final_html = f"<div><h4>Referenced items: {self.get_wd_label()}</h4></div>{data_tbl}"
         return final_html
