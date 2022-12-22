@@ -1,18 +1,18 @@
-var global_var_query = "";
-var global_var_organism = "";
-var global_var_iframe_height = 0;
-var global_var_iframe_width = 0;
+let global_var_query = "";
+let global_var_organism = "";
+let global_var_iframe_height = 0;
+let global_var_iframe_width = 0;
 function button_view_on_click()
 {
-	var viewer_type = "";
-	var words = "";
-	var RNA_types = "";
-	var show_types = "";
-	var optional_interact = "";
-	var only_no_interact = "";
+	let viewer_type = "";
+	let words = "";
+	let RNA_types = "";
+	let show_types = "";
+	let optional_interact = "";
+	let only_no_interact = "";
 	$('#settings_form input[type=checkbox]:checked, #settings_form input[type=text], #settings_form select').each(
 	    function(index){
-	        var input = $(this);
+	        let input = $(this);
 	        if (input.attr('name') == 'viewer_type'){viewer_type = input.val();}
 	        if (input.attr('name') == 'WORDS'){words = input.val();}
 	        if (input.attr('name') == 'RNA_TYPE'){RNA_types += input.val() + ',';}

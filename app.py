@@ -1,9 +1,10 @@
-from flask import *
+from flask import Flask, render_template, request, jsonify
 from WDQueryGenerator import *
 from WDReferencesFetcher import *
+from flask_cors import CORS
 
-app = Flask(__name__)
-
+app = Flask(__name__, template_folder='templates', static_folder='static')
+CORS(app)
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -13,7 +14,7 @@ def catch_all(path):
 
 @app.route('/')
 def index():
-    return render_template('home.html')
+    return render_template('index.html')
 
 
 @app.route('/fetch_references')
@@ -39,5 +40,5 @@ def return_viewer_query():
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
 
