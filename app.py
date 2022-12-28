@@ -6,15 +6,16 @@ from flask_cors import CORS
 app = Flask(__name__, template_folder='templates', static_folder='static')
 CORS(app)
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return render_template(path)
-
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return render_template(path)
 
 
 @app.route('/fetch_references')
