@@ -37,26 +37,28 @@ class WDReferencesFetcher:
         if len(results) != 0:
             for result in results:
                 row_nums += 1
-                interacted_RNA_references.append([row_nums, result['rnaLabel']['value'], result['propLabel']['value'],
+                interacted_RNA_references.append([row_nums,
+                                                  result['rnaLabel']['value'],
+                                                  result['propLabel']['value'],
                                                   result['targetLabel']['value'],
-                                                  f"{result['quote']['value']}"
-                                                  '</br><a target="_self" href="Article_Viewer.html?article_PMCID='
-                                                  f"{result['PMCID']['value']}"
-                                                  f"&quote={urllib.parse.quote_plus(result['quote']['value'])}"
-                                                  '">Read this in the article</a>',
+                                                  f"{result['quote']['value']}",
+                                                  '<div class="form-control"><a target="_blank" href="'
+                                                  f"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{result['PMCID']['value']}#:~:text={result['quote']['value']}"
+                                                  '"><img src="static/images/Logo_PMC.png" '
+                                                  'title="Open source of the quote in PubMed Central" height="30px" class="rounded"></a></div>',
                                                   '<div class="form-control"><a target="_blank" href="'
                                                   f"{result['rna']['value']}"
                                                   '"><img src="static/images/Interact_logo_Wikidata.png" '
-                                                  'height="30px" class="rounded"></a></div>'])
+                                                  'title="View WikiData item" height="30px" class="rounded"></a></div>'])
         else:
             return "Query returns nothing."
-        data_tbl_cols = ['#', 'sRNA', 'Type of Regulation', 'Target Gene', 'Quote', 'Source']
+        data_tbl_cols = ['#', 'sRNA', 'Type of Regulation', 'Target Gene', 'Quote', 'Quote from', 'WikiData']
         data_tbl_df = pd.DataFrame(interacted_RNA_references, columns=data_tbl_cols)
-        pd.set_option('display.max_colwidth', -1)
+        pd.set_option('display.max_colwidth', None)
         data_tbl = data_tbl_df.to_html(index=False, escape=False, bold_rows=False, max_rows=None, max_cols=None,
                                        table_id="data_tbl", justify="center")
         data_tbl = data_tbl.replace('border="1" ', "")
-        data_tbl = data_tbl.replace('class="dataframe" ', 'class="display responsive no-wrap" '
-                                    'style="font-family: Courier New; font-size: 13px;"')
+        data_tbl = data_tbl.replace('class="dataframe" ',
+                                    'class="display responsive no-wrap table" ')
         final_html = f"<div><h4>Referenced items: {self.get_wd_label()}</h4></div>{data_tbl}"
         return final_html
