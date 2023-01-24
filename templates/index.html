@@ -28,7 +28,7 @@
 <header>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div class="navbar-header">
-            <a href="index.html"><img src="{{url_for('.static', filename='images/logo.png')}}"
+            <a href="index.html"><img alt="Logo" src="{{url_for('.static', filename='images/logo.png')}}"
                                       style="height: 44px;"/></a>
             <a class="navbar-brand" href="index.html">InteractOA</a>
         </div>
@@ -36,7 +36,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a href="#" class="btn nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown"><img
+                    <a href="#" class="btn nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown"><img alt=""
                             src="{{url_for('.static', filename='images/info.png')}}" style="height: 44px;"/></a>
                     <div class="dropdown-menu dropdown-menu-right bg-dark">
                         <a class="btn dropdown-item bg-dark text-light" data-toggle="modal" data-target="#AboutModal">About
@@ -63,11 +63,9 @@
                     <h3>Welcome to InteractOA!</h3>
                 </div>
                 <div align="justify">
-
-                    InteractOA is a visual interactive tool to visualize the RNA interactions inside prokaryotic cells
-                    and cite these interactions to the literature based on an Open Access (OA) platforms.
-                    It's a freely open, editable, and centralized database for the biological research community.
-                    <br> Powered by: Wikidata and PubMed Central.
+                    InteractOA is a front-end interface that provides visualizations of prokaryotic regulatory small RNAs interaction networks, and statement level citations to PubMed Central articles that describe the evidences on these interactions.
+                    InteractOA is powered by open access knowledge graph of Wikidata.
+                    InteractOA is made for the freedom of biological research community.
                 </div>
             </div>
         </div>
@@ -87,6 +85,8 @@
                     <label for="organism"></label>
                     <select name="organism" id="organism" class="form-control form-control-lg">
                         <option value="Q21102938">Escherichia coli str. K-12 substr. MG1655</option>
+                        <option value="Q21102945">Vibrio cholerae str. O1 biovar ElTor N16961</option>
+                        <option value="Q116359561">Salmonella enterica subsp. enterica serovar Typhimurium str. SL1344</option>
                     </select>
                     <div class="col">
                         <button type="button" class="btn btn-outline-secondary btn-lg"
@@ -175,13 +175,13 @@
                                         <input type="checkbox" id="RNA_TYPE2" name="RNA_TYPE" value="Q427087" checked>
                                         <label for="RNA_TYPE2"> non-coding RNA</label><br>
                                         <input type="checkbox" id="RNA_TYPE3" name="RNA_TYPE" value="Q423832" checked>
-                                        <label for="RNA_TYPE3"> Antisense RNA</label><br>
+                                        <label for="RNA_TYPE3"> Anti-sense RNA</label><br>
                                         <input type="checkbox" id="RNA_TYPE4" name="RNA_TYPE" value="Q201448">
                                         <label for="RNA_TYPE4"> transfer RNA</label><br>
                                         <input type="checkbox" id="RNA_TYPE5" name="RNA_TYPE" value="Q285904" checked>
                                         <label for="RNA_TYPE5"> transfer-messenger RNA</label><br>
                                         <input type="checkbox" id="RNA_TYPE6" name="RNA_TYPE" value="Q424665" checked>
-                                        <label for="RNA_TYPE6"> single recognition partcile</label><br>
+                                        <label for="RNA_TYPE6"> single recognition particle</label><br>
                                         <input type="checkbox" id="RNA_TYPE7" name="RNA_TYPE" value="Q1012651" checked>
                                         <label for="RNA_TYPE7"> RNase P</label>
                                     </div>
@@ -222,7 +222,7 @@
                                         <input type="checkbox" id="SHOW_TYPE10" name="SHOW_TYPE" value="P3779">
                                         <label for="SHOW_TYPE10"> Negative Allosteric Modulator</label><br>
                                         <input type="checkbox" id="SHOW_TYPE11" name="SHOW_TYPE" value="P3781">
-                                        <label for="SHOW_TYPE11"> Has Active Ingedient</label><br>
+                                        <label for="SHOW_TYPE11"> Has Active Ingredient</label><br>
                                         <input type="checkbox" id="SHOW_TYPE12" name="SHOW_TYPE" value="P3780">
                                         <label for="SHOW_TYPE12"> Active Ingredient of</label>
                                     </div>
@@ -308,7 +308,7 @@
                 </p>
                 <h5>Developers</h5>
                 <p>
-                    InteractOA and it's prerequisite tools are all developed by: Muhammad Elhossary under supervision of
+                    InteractOA and its prerequisite tools are all developed by: Muhammad Elhossary under supervision of
                     Prof. Konrad Foerstner at <a href="https://uni-wuerzburg.de/startseite/">University of Würzburg</a>.<br>
                     Press link: <a
                         href="http://www.presse.uni-wuerzburg.de/aktuell/einblick/archiv/single/news/zur-quelle-des-wissens/">here</a>
@@ -413,8 +413,8 @@
                     Toolforge</a>.
                     All data of the interactions and gene annotations are hosted in <a
                         href="www.wikidata.org">Wikidata</a>.
-                    No literature is hosted in InteractOA, InteractOA only refere to the articles in it's original
-                    source <a href="https://pubmed.ncbi.nlm.nih.gov/">PubMed Central</a>.
+                    No literature is hosted in InteractOA, InteractOA only refere to the articles in their original
+                    sources <a href="https://pubmed.ncbi.nlm.nih.gov/">PubMed Central</a>.
                     All data of InteractOA are licensed under <a href="https://wiki.creativecommons.org/wiki/CC0">CC-0
                     Public Domain</a>.
                     All source codes are licensed under <a href="https://en.wikipedia.org/wiki/ISC_license">ISC
