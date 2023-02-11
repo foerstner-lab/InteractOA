@@ -1,7 +1,6 @@
 from wikidataintegrator.wdi_core import WDItemEngine
-import urllib.parse
 import pandas as pd
-
+import urllib.parse
 
 class WDReferencesFetcher:
 
@@ -37,14 +36,15 @@ class WDReferencesFetcher:
         if len(results) != 0:
             for result in results:
                 row_nums += 1
+                tmp_quote = urllib.parse.quote(result['quote']['value'])
+                pmc_url = f"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{result['PMCID']['value']}#:~:text={tmp_quote}"
+                pmc_url = pmc_url.replace('.', '%2E').replace('-', '%2D')
                 interacted_RNA_references.append([row_nums,
                                                   result['rnaLabel']['value'],
                                                   result['propLabel']['value'],
                                                   result['targetLabel']['value'],
                                                   f"{result['quote']['value']}",
-                                                  '<div class="form-control"><a target="_blank" href="'
-                                                  f"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{result['PMCID']['value']}#:~:text={result['quote']['value']}"
-                                                  '"><img src="static/images/Logo_PMC.png" '
+                                                  f'<div class="form-control"><a target="_blank" href="{pmc_url}"><img src="static/images/Logo_PMC.png" '
                                                   'title="Open source of the quote in PubMed Central" height="30px" class="rounded"></a></div>',
                                                   '<div class="form-control"><a target="_blank" href="'
                                                   f"{result['rna']['value']}"
