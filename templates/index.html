@@ -28,8 +28,8 @@
 <header>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div class="navbar-header">
-            <a href="index.html"><img alt="Logo" src="{{url_for('.static', filename='images/logo.png')}}"
-                                      style="height: 44px;"/></a>
+            <!--<a href="index.html"><img alt="Logo" src="{{url_for('.static', filename='images/logo.png')}}"
+                                      style="height: 44px;"/></a>-->
             <a class="navbar-brand" href="index.html">InteractOA</a>
         </div>
 
@@ -92,7 +92,7 @@
                     <div class="col">
                         <button type="button" class="btn btn-outline-secondary btn-lg"
                                 style="padding: 10px; margin: 20px;" data-toggle="modal" data-target="#VisualizerModal">
-                            Open Visualizer
+                            View interactions network
                         </button>
 
 
@@ -100,7 +100,7 @@
                     <div class="col">
                         <button type="button" class="btn btn-outline-secondary btn-lg"
                                 style="padding: 10px; margin: 20px;" data-toggle="modal" data-target="#RefsModal">
-                            Browse References
+                            View citations
                         </button>
                     </div>
                 </div>
@@ -422,7 +422,7 @@
                     sources <a href="https://pubmed.ncbi.nlm.nih.gov/">PubMed Central</a>.
                     All data of InteractOA are licensed under <a href="https://wiki.creativecommons.org/wiki/CC0">CC-0
                     Public Domain</a>.
-                    All source codes are licensed under <a href="https://en.wikipedia.org/wiki/ISC_license">ISC
+                    All source codes are licensed under <a href="https://opensource.org/licenses/MIT">MIT
                     license</a>.
                 </p>
             </div>
@@ -460,11 +460,33 @@
     </div>
 </div>
 </body>
-<!-- <footer>
+<footer class="fixed-bottom">
 <div class="page-footer font-small blue pt-4 mt-4">
-<div class="container">
-<div class="row"></div>
+<div class="container border-top bg-light" style="border-top-width: 3px;">
+
+<div class="row m-2" style="align-content: center; align-items: center; text-align: center;">
+    <div class="col-4">
+
+    </div>
+    <div class="col-2 border-right">
+        <a href="https://www.zbmed.de/"><img alt="ZB MED Logo" src="{{url_for('.static', filename='images/ZBMED_logo.png')}}"
+                                      style="height: 60px;"/></a>
+    </div>
+    <div class="col-2 border-right">
+        <a href="https://www.bmbf.de"><img alt="BMBF Logo" src="{{url_for('.static', filename='images/BMBF_Logo.png')}}"
+                                      style="height: 60px;"/></a>
+    </div>
+    <div class="col-4">
+
+    </div>
+
+</div>
+    <div class="row d-flex justify-content-center m-2">
+        <p class="text-center">
+            Copyright © 2018-2023, and licensed under the MIT License.
+        </p>
+    </div>
 </div>
 </div>
-</footer>-->
+</footer>
 </html>
