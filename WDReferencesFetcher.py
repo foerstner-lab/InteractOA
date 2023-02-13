@@ -53,7 +53,7 @@ class WDReferencesFetcher:
                                                   'title="View WikiData item" height="30px" class="rounded"></a></div>'])
         else:
             return "Query returns nothing."
-        data_tbl_cols = ['#', 'sRNA', 'sRNA synonyms', 'Type of Regulation', 'Target Gene', 'Quote', 'Quote from', 'WikiData']
+        data_tbl_cols = ['#', 'sRNA', 'sRNA synonyms', 'Type of Regulation', 'Target Gene', 'Quote', 'Quote from', 'Wikidata']
         data_tbl_df = pd.DataFrame(interacted_RNA_references, columns=data_tbl_cols)
         pd.set_option('display.max_colwidth', None)
         data_tbl = data_tbl_df.to_html(index=False, escape=False, bold_rows=False, max_rows=None, max_cols=None,
