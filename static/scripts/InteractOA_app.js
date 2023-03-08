@@ -94,6 +94,9 @@ $(document).ready(function () {
         $("#div_visualizer_settings").show();
     });
     //--------------------------------------------------------------
+    $('#RefsModal').on('show.bs.modal', function (e) {
+        $('#browser_alert').hide();
+    });
     $('#RefsModal').on('shown.bs.modal', function (e) {
         var browser = (function () {
             var test = function (regexp) {
@@ -121,7 +124,7 @@ $(document).ready(function () {
             }
         })();
         if (browser === "Mozilla Firefox"){
-            alert("This web browser isn't fully compatible with some functionalities in Interact OA. Please use another browser like: Chromium, Google Chrome, Opera, or Microsoft Edge");
+            $('#browser_alert').show();
         }
 
         global_var_organism = $('#organism').val();

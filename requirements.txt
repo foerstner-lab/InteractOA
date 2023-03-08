@@ -1,3 +1,4 @@
-pandas>=
-Flask>=
-wikidataintegrator>=
+pandas
+Flask
+wikidataintegrator
+flask_cors
