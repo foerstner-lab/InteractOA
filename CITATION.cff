@@ -7,7 +7,7 @@ authors:
   - family-names: Förstner
     given-names: Konrad U.
     orcid: https://orcid.org/0000-0002-1481-2996
-title: "sRNA interactions to Wikidata Importer"
-version: 0.1.0
+title: "InteractOA"
+version: 1.0.1
 doi:
 date-released: 2018-08-31

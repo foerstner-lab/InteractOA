@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from WDQueryGenerator import *
 from WDReferencesFetcher import *
+from pmc_article_fetcher import *
 from flask_cors import CORS
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
@@ -22,6 +23,14 @@ def catch_all(path):
 def fetch_references():
     organism_QID = request.args.get('organism_qid', default=None, type=None)
     return jsonify(results=WDReferencesFetcher(organism_QID).get_interacted_RNA_references())
+
+
+@app.route('/Article_Viewer.html')
+def fetch_article():
+    pmcid = request.args.get('pmcid', default=None, type=None)
+    quote = request.args.get('quote', default=None, type=None)
+    article_body, head_src = PMCArticleFetcher(pmcid, quote).fetch_article()
+    return render_template("Article_Viewer.html", article_body=article_body, head_src=head_src)
 
 
 @app.route('/generate_viewer_query')

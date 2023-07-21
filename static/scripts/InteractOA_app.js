@@ -70,8 +70,29 @@ function getQueryStringParameterByName(name, url) {
         return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+function mark_text(searchVal) {
+    var punc = ".?!,:;––—()[]{}<>“”‘/… *& #~\@^|+=".split("");
+    var options = {
+        "separateWordSearch": false,
+        "acrossElements": true,
+        "ignoreJoiners": true,
+        "ignorePunctuation": punc
+    };
+    $("#article_body").unmark({
+        done: function () {
+            $("#article_body").mark(searchVal, options);
+        }
+    });
+    window.find(searchVal);
+}
+
 
 $(document).ready(function () {
+    let searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.has('quote')) {
+        mark_text(searchParams.get('quote'));
+    }
+
     $('#ONLY_NO_INTERACT').change(function () {
         if (this.checked) {
             $("#OPTIONAL_INTERACT").removeAttr("checked");
@@ -93,11 +114,14 @@ $(document).ready(function () {
         $("#div_visalizer_iframe").hide();
         $("#div_visualizer_settings").show();
     });
+    /*
     //--------------------------------------------------------------
     $('#RefsModal').on('show.bs.modal', function (e) {
         $('#browser_alert').hide();
     });
+    */
     $('#RefsModal').on('shown.bs.modal', function (e) {
+        /*
         var browser = (function () {
             var test = function (regexp) {
                 return regexp.test(window.navigator.userAgent)
@@ -124,9 +148,10 @@ $(document).ready(function () {
             }
         })();
         if (browser === "Mozilla Firefox"){
-            $('#browser_alert').show();
-        }
+             $('#browser_alert').show();
 
+        }
+         */
         global_var_organism = $('#organism').val();
         global_var_iframe_height = parseInt($('#refs_div').prop('scrollHeight')) * 0.93;
         global_var_iframe_width = parseInt($('#refs_div').prop('scrollWidth')) * 0.97;

@@ -37,7 +37,8 @@ class WDReferencesFetcher:
             for result in results:
                 row_nums += 1
                 tmp_quote = urllib.parse.quote(result['quote']['value'])
-                pmc_url = f"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{result['PMCID']['value']}#:~:text={tmp_quote}"
+                #pmc_url = f"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{result['PMCID']['value']}#:~:text={tmp_quote}"
+                pmc_url = f"/Article_Viewer.html?pmcid=/PMC{result['PMCID']['value']}&quote={tmp_quote}"
                 pmc_url = pmc_url.replace('.', '%2E').replace('-', '%2D')
                 interacted_RNA_references.append([row_nums,
                                                   result['rnaLabel']['value'],
