@@ -1,7 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 
 
 class PMCArticleFetcher:
@@ -19,7 +17,6 @@ class PMCArticleFetcher:
         chrome_options.add_argument("--start-maximized")
         chrome_options.add_argument('chromedriver')
         driver = webdriver.Chrome(options=chrome_options)
-        #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         driver.get(f"{base_url}{self._PMC_ID}")
         article_source = driver.execute_script("return document.getElementById('mc').outerHTML;")
         head_source = driver.execute_script("return document.getElementsByTagName('head')[0].innerHTML;")
