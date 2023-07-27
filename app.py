@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, jsonify
 from WDQueryGenerator import *
 from WDReferencesFetcher import *
-from pmc_article_fetcher import *
 from flask_cors import CORS
+from urllib.request import Request, urlopen
+from bs4 import BeautifulSoup
+
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 CORS(app)
@@ -28,14 +30,11 @@ def fetch_references():
 @app.route('/Article_Viewer.html')
 def fetch_article():
     pmcid = request.args.get('pmcid', default=None, type=None)
-    quote = request.args.get('quote', default=None, type=None)
-    article_body, head_src = PMCArticleFetcher(pmcid, quote).fetch_article()
+    article_body, head_src = get_article(pmcid)
     return render_template("Article_Viewer.html", article_body=article_body, head_src=head_src)
 
 
 @app.route('/generate_viewer_query')
-
-
 def return_viewer_query():
     organism_qid = request.args.get('organism_qid', default=None, type=None)
     view_type = request.args.get('view_type', default=None, type=None)
@@ -47,6 +46,22 @@ def return_viewer_query():
     query = WDQueryGenerator(organism_qid, view_type, filters, shows, words, is_interacted,
                              only_no_interacted).generate_query()
     return jsonify(results=query)
+
+
+def get_article(pmcid):
+    base_url = "https://www.ncbi.nlm.nih.gov/pmc/articles/"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}
+    req = Request(f"{base_url}{pmcid}", headers=headers)
+    content = urlopen(req).read().decode("utf-8")
+    replacements = {'href="//doi.org': 'href="https://www.doi.org',
+                    'href="/': 'href="https://www.ncbi.nlm.nih.gov/',
+                    'src="/': 'src="https://www.ncbi.nlm.nih.gov/',
+                    "url(/corehtml/pmc/pmcgifs": "url(https://www.ncbi.nlm.nih.gov/corehtml/pmc/pmcgifs"}
+    for k, v in replacements.items():
+        content = content.replace(k, v)
+    soup = BeautifulSoup(content, "html.parser")
+    return soup.find("div", {"id": "mc"}), soup.find("head")
 
 
 if __name__ == '__main__':

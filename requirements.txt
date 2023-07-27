@@ -2,4 +2,4 @@ pandas
 Flask
 wikidataintegrator
 flask_cors
-selenium
+beautifulsoup4
