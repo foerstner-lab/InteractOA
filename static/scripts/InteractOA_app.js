@@ -1,7 +1,9 @@
 let global_var_query = "";
 let global_var_organism = "";
+/*
 let global_var_iframe_height = 0;
 let global_var_iframe_width = 0;
+*/
 
 function button_view_on_click() {
     let viewer_type = "";
@@ -47,11 +49,13 @@ function button_view_on_click() {
         global_var_query = encodeURIComponent(returned_query.results);
         $('#iframe_viewer').prop('src', "https://query.wikidata.org/embed.html#" + global_var_query);
     });
+    /*
     global_var_iframe_height = parseInt($('#Vis_div').prop('scrollHeight')) * 0.95;
     global_var_iframe_width = parseInt($('#Vis_div').prop('scrollWidth')) * 0.97;
     $('#iframe_viewer').css('border', "none");
     $('#iframe_viewer').css('width', global_var_iframe_width + "px");
     $('#iframe_viewer').css('height', global_var_iframe_height + "px");
+     */
     $("#div_visalizer_iframe").show();
     $("#div_visualizer_settings").hide();
     $('#iframe_viewer')[0].contentWindow.location.reload(true);
@@ -153,8 +157,10 @@ $(document).ready(function () {
         }
          */
         global_var_organism = $('#organism').val();
+        /*
         global_var_iframe_height = parseInt($('#refs_div').prop('scrollHeight')) * 0.93;
         global_var_iframe_width = parseInt($('#refs_div').prop('scrollWidth')) * 0.97;
+        */
         console.log();
         $.getJSON('fetch_references', {
             organism_qid: $("#organism option:selected").val()
@@ -164,11 +170,12 @@ $(document).ready(function () {
                 "ordering": false,
                 "autoWidth": false,
                 "lengthChange": true,
-                scrollY: `${global_var_iframe_height * 0.75}px`,
+
                 scrollCollapse: true,
                 paging: false,
                 responsive: {details: false}
             });
+            /*scrollY: `${global_var_iframe_height * 0.75}px`,*/
             $("#data_tbl_filter").children().prop('class', 'form-control form-control-md');
             $("#data_tbl_length").children().prop('class', 'form-control form-control-md');
         });
