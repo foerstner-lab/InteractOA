@@ -25,7 +25,7 @@
         }
         iframe{
         display: block;  /* iframes are inline by default */
-        height: 98vh;  /* Set height to 100% of the viewport height */
+        height: 94vh;  /* Set height to 100% of the viewport height */
         width: 98vw;  /* Set width to 100% of the viewport width */
         border: none; /* Remove default border */
     }
@@ -49,8 +49,8 @@
 
                         <a class="btn dropdown-item bg-dark text-light" target="_blank" href="https://query.wikidata.org/embed.html#%23defaultView%3ATable%0ASELECT%20DISTINCT%20%3Fspecie%20%3FspecieLabel%20%3Frna%20%3FrnaLabel%20%3FrnaAltLabel%20%3Ftargetgene%3FtargetgeneLabel%20%3FtargetgeneAltLabel%20WHERE%7B%0A%0A%20%20%3Frna%20wdt%3AP703%20%3Fspecie%0A%20%20%20%20%20%20%20FILTER%20%28%3Fspecie%20IN%20%28wd%3AQ21102938%2C%20wd%3AQ21102945%2C%20wd%3AQ21102956%29%29%0A%7B%0A%7B%3Frna%20wdt%3AP31%20wd%3AQ11053.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP279%20wd%3AQ11053.%7D%20%0AUNION%0A%7B%3Frna%20wdt%3AP31%20wd%3AQ427087.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP279%20wd%3AQ427087.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP31%20wd%3AQ423832.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP279%20wd%3AQ423832.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP31%20wd%3AQ201448.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP279%20wd%3AQ201448.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP31%20wd%3AQ285904.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP279%20wd%3AQ285904.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP31%20wd%3AQ424665.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP279%20wd%3AQ424665.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP31%20wd%3AQ1012651.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP279%20wd%3AQ1012651.%7D%0A%7D%0AOPTIONAL%20%7B%0A%7B%3Frna%20wdt%3AP128%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3777%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3773%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3776%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3771%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3774%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3772%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3775%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3778%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3779%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3781%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3780%3Ftargetgene.%7D%0A%7D%0ASERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%7D%0A%7D">
                             Download all sRNAs in tabular format</a>
-                        <a class="btn dropdown-item bg-dark text-light" target="_blank" href="">
-                            Download in RDF format</a>
+                        <a class="btn dropdown-item bg-dark text-light" target="_blank" href="https://query.wikidata.org/embed.html#%23defaultView%3ATable%0ACONSTRUCT%20%7B%0A%20%20%3Frna%20wdt%3AP31%20%3Frnatype.%0A%20%20%3Frna%20wdt%3AP279%20%3Frnatype.%0A%20%20%3Frna%20wdt%3AP128%20%3Ftargetgene.%0A%20%20%20%20%20%20%20%20%20%20%7D%20WHERE%7B%0A%20%20VALUES%20%3Frnatype%20%7Bwd%3AQ11053%20wd%3AQ427087%20wd%3AQ423832%20wd%3AQ201448%20wd%3AQ285904%20wd%3AQ424665%20wd%3AQ1012651%7D%0A%20%20VALUES%20%3Fspecie%20%7Bwd%3AQ21102938%20wd%3AQ21102945%20wd%3AQ21102956%7D%0A%20%20%3Frna%20wdt%3AP703%20%3Fspecie.%0A%20%20%7B%0A%20%20%7B%3Frna%20wdt%3AP31%20%3Frnatype.%7D%0A%20%20UNION%0A%20%20%20%20%7B%3Frna%20wdt%3AP279%20%3Frnatype.%7D%0A%20%20%20%20%7D%0AOPTIONAL%20%7B%0A%7B%3Frna%20wdt%3AP128%20%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3777%20%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3773%20%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3776%20%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3771%20%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3774%20%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3772%20%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3775%20%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3778%20%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3779%20%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3781%20%3Ftargetgene.%7D%0AUNION%0A%7B%3Frna%20wdt%3AP3780%20%3Ftargetgene.%7D%0A%7D%0A%7D%0A">
+                            Download all sRNAs in RDF format</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -126,29 +126,7 @@
         </div>
     </form>
 </div>
-<div id="DownTblModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-full modal-dialog-centered">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Download</h4>
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;
-                </button>
-
-            </div>
-            <div class="modal-body">
-
-
-            </div>
-            <!--<div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>-->
-        </div>
-
-    </div>
-</div>
 <div id="VisualizerModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-full modal-dialog-centered">
 

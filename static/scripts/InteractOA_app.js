@@ -170,13 +170,12 @@ $(document).ready(function () {
                 "ordering": false,
                 "autoWidth": false,
                 "lengthChange": true,
-
                 scrollCollapse: true,
                 paging: false,
                 responsive: {details: false}
             });
             /*scrollY: `${global_var_iframe_height * 0.75}px`,*/
-            $("#data_tbl_filter").children().prop('class', 'form-control form-control-md');
+            $("#data_tbl_filter").children("input").prop('class', 'form-control form-control-md');
             $("#data_tbl_length").children().prop('class', 'form-control form-control-md');
         });
 
