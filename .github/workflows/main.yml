@@ -15,7 +15,7 @@ jobs:
 
       - name: Pull latest changes and restart server
         run: |
-          ssh -A -J hossary@141.80.173.4 ubuntu@172.17.6.102 'bash -s' << 'EOF'
+          ssh -vvv -A -J hossary@141.80.173.4 ubuntu@172.17.6.102 'bash -s' << 'EOF'
           cd InteractOA
           git pull origin main
           sudo systemctl restart gunicorn
