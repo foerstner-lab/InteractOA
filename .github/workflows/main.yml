@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Pull latest changes and restart server
+        run: |
+          ssh -A -J hossary@denbi-jumphost-01.bihealth.org ubuntu@172.17.6.102 'bash -s' << 'EOF'
+          cd InteractOA
+          git pull origin main
+          sudo systemctl restart gunicorn
+          sudo systemctl restart interactoa
+          EOF
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
