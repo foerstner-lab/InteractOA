@@ -17,7 +17,11 @@ jobs:
       uses: webfactory/ssh-agent@v0.5.4
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
+    
+    - name: Add server to known hosts
+      run: |
+        ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+    
     - name: Deploy to server
       run: |
-        ssh -o StrictHostKeyChecking=no -A -J hossary@141.80.173.4 ubuntu@172.17.6.10 -t "cd InteractOA && git pull && sudo systemctl restart interactoa"
+        ssh -o StrictHostKeyChecking=no -A -J hossary@141.80.173.4 ubuntu@172.17.6.102 -t "cd InteractOA && git pull && sudo systemctl restart interactoa"
