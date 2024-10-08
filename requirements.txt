@@ -3,3 +3,5 @@ Flask
 wikidataintegrator
 flask_cors
 beautifulsoup4
+gunicorn
+setuptools
