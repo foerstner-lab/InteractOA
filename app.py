@@ -30,7 +30,7 @@ def fetch_references():
 @app.route('/Article_Viewer.html')
 def fetch_article():
     pmcid = request.args.get('pmcid', default=None, type=None)
-    article_body, head_src = get_article(pmcid)
+    head_src, article_body = get_article(pmcid)
     return render_template("Article_Viewer.html", article_body=article_body, head_src=head_src)
 
 
@@ -51,7 +51,7 @@ def return_viewer_query():
 def get_article(pmcid):
     base_url = "https://www.ncbi.nlm.nih.gov/pmc/articles/"
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'}
     req = Request(f"{base_url}{pmcid}", headers=headers)
     content = urlopen(req).read().decode("utf-8")
     replacements = {'href="//doi.org': 'href="https://www.doi.org',
@@ -61,7 +61,7 @@ def get_article(pmcid):
     for k, v in replacements.items():
         content = content.replace(k, v)
     soup = BeautifulSoup(content, "html.parser")
-    return soup.find("div", {"id": "mc"}), soup.find("head")
+    return soup.find("head"), soup.find("article", {"lang": "en"})
 
 
 if __name__ == '__main__':

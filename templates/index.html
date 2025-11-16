@@ -6,12 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>InteractOA - Start</title>
     <script src="{{url_for('.static', filename='scripts/jquery.min.js')}}"></script>
+
     <script src="{{url_for('.static', filename='scripts/bootstrap_4.6.2.bundle.min.js')}}"
             crossorigin="anonymous"></script>
     <link href="{{url_for('.static', filename='scripts/bootstrap_4.6.2.min.css')}}" rel="stylesheet"
           crossorigin="anonymous">
-    <script crossorigin="anonymous" src="{{url_for('.static', filename='scripts/jquery.dataTables.min.js')}}"></script>
-    <link href="{{url_for('.static', filename='scripts/jquery.dataTables.min.css')}}" rel="stylesheet" crossorigin="anonymous">
+
+
+    <script crossorigin="anonymous" src="{{url_for('.static', filename='scripts/dataTables.min.js')}}"></script>
+    <script crossorigin="anonymous" src="{{url_for('.static', filename='scripts/dataTables.jqueryui.min.js')}}"></script>
+    <link href="{{url_for('.static', filename='scripts/dataTables.jqueryui.min.css')}}" rel="stylesheet" crossorigin="anonymous">
+
     <script type="text/javascript" src="{{url_for('.static', filename='scripts/InteractOA_app.js')}}"></script>
     <link rel="icon" type="image/png" href="{{url_for('.static', filename='images/favico.png')}}">
     <style>
@@ -43,7 +48,7 @@
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item dropdown">
-                    <a href="#" class="btn nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown"><img alt=""
+                    <a href="#" class="btn nav-link" id="navbarDropdownMenuLink1" data-toggle="dropdown"><img alt=""
                             src="{{url_for('.static', filename='images/download_btn.png')}}" style="height: 44px;"/></a>
                     <div class="dropdown-menu dropdown-menu-right bg-dark">
 
@@ -54,7 +59,7 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a href="#" class="btn nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown"><img alt=""
+                    <a href="#" class="btn nav-link" id="navbarDropdownMenuLink2" data-toggle="dropdown"><img alt=""
                             src="{{url_for('.static', filename='images/info.png')}}" style="height: 44px;"/></a>
                     <div class="dropdown-menu dropdown-menu-right bg-dark">
                         <a class="btn dropdown-item bg-dark text-light" data-toggle="modal" data-target="#AboutModal">About
@@ -333,7 +338,7 @@
                     This work was described in a peer review article <em>"InteractOA: Showcasing the representation of knowledge from scientific literature in Wikidata"</em> published in <a href="https://semantic-web-journal.net/">Semantic Web Journal</a>'s special issue on Wikidata: Construction, Evaluation and Applications.
                     <br>
                     <br>
-                    <strong>Citation:</strong> Elhossary, Muhammad and Förstner, Konrad U. ‘InteractOA: Showcasing the Representation of Knowledge from Scientific Literature in Wikidata’. Semantic Web. IOS Press. 19 Aug. 2024 : 1 – 13. DOI: <a href="https://doi.org/10.3233/SW-243685">10.3233/SW-243685</a>
+                    <strong>Citation:</strong> Elhossary, Muhammad and Förstner, Konrad U. ‘InteractOA: Showcasing the Representation of Knowledge from Scientific Literature in Wikidata’. Semantic Web. IOS Press. 19 Aug. 2025 : 1 – 13. DOI: <a href="https://doi.org/10.3233/SW-243685">10.3233/SW-243685</a>
                 </p>
                 <h5>Funding</h5>
                 <p>
@@ -520,7 +525,7 @@
 </div>
     <div class="row d-flex justify-content-center m-2">
         <p class="text-center">
-            Copyright © 2018-2024
+            Copyright © 2018-2025
         </p>
     </div>
 </div>
