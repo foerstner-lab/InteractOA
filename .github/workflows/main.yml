@@ -20,4 +20,4 @@ jobs:
     
     - name: Deploy to server
       run: |
-        ssh -vvv -o StrictHostKeyChecking=no -A -J hossary@denbi-jumphost-01.bihealth.org ubuntu@10.57.202.181 "cd InteractOA && git pull && sudo systemctl restart interactoa" && ssh -vvv -o StrictHostKeyChecking=no -A -J hossary@141.80.173.4 ubuntu@172.17.6.102 "cd InteractOA && git pull && sudo systemctl restart interactoa"
+        ssh -vvv -o StrictHostKeyChecking=no -A -J hossary@194.94.4.4 ubuntu@10.57.202.181 "cd InteractOA && git pull && sudo systemctl restart interactoa" && ssh -vvv -o StrictHostKeyChecking=no -A -J hossary@141.80.173.4 ubuntu@172.17.6.102 "cd InteractOA && git pull && sudo systemctl restart interactoa"
