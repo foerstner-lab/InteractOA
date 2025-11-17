@@ -49,19 +49,21 @@ def return_viewer_query():
 
 
 def get_article(pmcid):
-    base_url = "https://www.ncbi.nlm.nih.gov/pmc/articles/"
+    base_url = "https://pmc.ncbi.nlm.nih.gov/articles/"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'}
     req = Request(f"{base_url}{pmcid}", headers=headers)
     content = urlopen(req).read().decode("utf-8")
-    replacements = {'href="//doi.org': 'href="https://www.doi.org',
-                    'href="/': 'href="https://www.ncbi.nlm.nih.gov/',
-                    'src="/': 'src="https://www.ncbi.nlm.nih.gov/',
-                    "url(/corehtml/pmc/pmcgifs": "url(https://www.ncbi.nlm.nih.gov/corehtml/pmc/pmcgifs"}
+    replacements = {
+        'content="/': 'content="https://pmc.ncbi.nlm.nih.gov/',
+        'href="//doi.org': 'href="https://www.doi.org',
+        'href="/': 'href="https://pmc.ncbi.nlm.nih.gov/',
+        'src="/': 'src="https://pmc.ncbi.nlm.nih.gov/',
+        "url(/corehtml/pmc/pmcgifs": "url(https://pmc.ncbi.nlm.nih.gov/corehtml/pmc/pmcgifs"}
     for k, v in replacements.items():
         content = content.replace(k, v)
     soup = BeautifulSoup(content, "html.parser")
-    return soup.find("head"), soup.find("article", {"lang": "en"})
+    return soup.find("head"), soup.find("main", {"id": "main-content"})
 
 
 if __name__ == '__main__':
